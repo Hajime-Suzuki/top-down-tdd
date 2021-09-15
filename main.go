@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
-
-	"top-down-tdd/game"
+	"top-down-tdd/abstractions"
 )
 
 func main() {
-	fmt.Println("yes")
-	game.Something()
+
+}
+
+func Start(game abstractions.Game) {
+	game.StartGame()
 }
