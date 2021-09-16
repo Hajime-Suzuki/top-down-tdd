@@ -4,6 +4,8 @@ import (
 	"testing"
 
 	"top-down-tdd/abstractions/mocks"
+	"top-down-tdd/board"
+	"top-down-tdd/user"
 	userinput "top-down-tdd/user-input"
 
 	"github.com/golang/mock/gomock"
@@ -30,6 +32,8 @@ var _ = Describe("Game", func() {
 		It("shows correct message", func() {
 			defer mockCtrl.Finish()
 
+			user := user.NewUser("user 1234")
+
 			boardMock := mocks.NewMockBoard(mockCtrl)
 			boardMock.EXPECT().HasWinner().Times(1).Return(true)
 
@@ -38,9 +42,10 @@ var _ = Describe("Game", func() {
 				userinput.NewUserInput(0, 0),
 			)
 
-			presenterMock := mocks.NewPresenter(mockCtrl)
-			presenterMock.showBoard.RETURNS = "xxx xxx xxx xxx"
-			presenterMock.showMessage.RETURNS = "player 1 won!"
+			presenterMock := mocks.NewMockPresenter(mockCtrl)
+			expectedBoard := board.NewBoard()
+			presenterMock.EXPECT().ShowBoard(expectedBoard).Times(1).Return("xxxxxxx")
+			presenterMock.EXPECT().ShowMessage(user).Times(1).Return("player 1 won!")
 
 			Expect(0).To(Equal(0))
 		})
