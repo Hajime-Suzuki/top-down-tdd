@@ -29,7 +29,6 @@ var _ = Describe("Main", func() {
 		defer mockCtrl.Finish() //! if this is not called, test passed when mock is not called...
 		m := mocks.NewMockGame(mockCtrl)
 		m.EXPECT().StartGame()
-		//TODO: create other interactions
 		Start(m)
 	})
 })
