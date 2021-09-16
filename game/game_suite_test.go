@@ -3,6 +3,8 @@ package game_test
 import (
 	"testing"
 
+	"top-down-tdd/abstractions/mocks"
+
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -28,7 +30,7 @@ var _ = Describe("Game", func() {
 			defer mockCtrl.Finish()
 
 			boardMock := mocks.NewMockBoard(mockCtrl)
-			boardMock.hasWinner.RETURNS = true
+			boardMock.EXPECT().HasWinner().Times(1).Return(true)
 
 			inputMock := mocks.NewInputHandler(mockCtrl)
 			inputMock.getUserInput.RETURNS = Mark{5, "x"}
