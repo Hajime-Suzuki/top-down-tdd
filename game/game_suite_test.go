@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"top-down-tdd/abstractions/mocks"
+	userinput "top-down-tdd/user-input"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -32,8 +33,10 @@ var _ = Describe("Game", func() {
 			boardMock := mocks.NewMockBoard(mockCtrl)
 			boardMock.EXPECT().HasWinner().Times(1).Return(true)
 
-			inputMock := mocks.NewInputHandler(mockCtrl)
-			inputMock.getUserInput.RETURNS = Mark{5, "x"}
+			inputMock := mocks.NewMockInputHandler(mockCtrl)
+			inputMock.EXPECT().GetUserInput().Times(1).Return(
+				userinput.NewUserInput(0, 0),
+			)
 
 			presenterMock := mocks.NewPresenter(mockCtrl)
 			presenterMock.showBoard.RETURNS = "xxx xxx xxx xxx"
