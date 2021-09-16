@@ -23,10 +23,20 @@ var _ = Describe("Game", func() {
 		mockCtrl = gomock.NewController(GinkgoT())
 	})
 
-	When("there is no winner yet", func() {
-		It("shows board", func() {
+	When("there is winner", func() {
+		It("shows correct message", func() {
 			defer mockCtrl.Finish()
-			//TODO: add tests
+
+			boardMock := mocks.NewMockBoard(mockCtrl)
+			boardMock.hasWinner.RETURNS = true
+
+			inputMock := mocks.NewInputHandler(mockCtrl)
+			inputMock.getUserInput.RETURNS = Mark{5, "x"}
+
+			presenterMock := mocks.NewPresenter(mockCtrl)
+			presenterMock.showBoard.RETURNS = "xxx xxx xxx xxx"
+			presenterMock.showMessage.RETURNS = "player 1 won!"
+
 			Expect(0).To(Equal(0))
 		})
 	})
