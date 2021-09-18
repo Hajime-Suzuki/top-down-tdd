@@ -5,9 +5,14 @@
 
 package game
 
+import (
+	"top-down-tdd/user-input"
+)
+
 // Injectors from game-wire.go:
 
 func InitializeGame() (Game, error) {
-	game := NewGame()
+	inputHandler := userinput.NewUserInput()
+	game := NewGame(inputHandler)
 	return game, nil
 }

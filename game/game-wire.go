@@ -2,9 +2,12 @@
 
 package game
 
-import "github.com/google/wire"
+import (
+	"github.com/google/wire"
+	. "top-down-tdd/user-input"
+)
 
 func InitializeGame() (Game, error) {
-	wire.Build(NewGame)
+	wire.Build(NewGame, NewUserInput)
 	return Game{}, nil
 }

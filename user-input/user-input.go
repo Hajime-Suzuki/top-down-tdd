@@ -1,10 +1,14 @@
 package userinput
 
-type UserInput struct {
-	x int
-	y int
+import "top-down-tdd/abstractions"
+
+type UserInputHandler struct {
 }
 
-func NewUserInput(x int, y int) UserInput {
-	return UserInput{x, y}
+func NewUserInput() abstractions.InputHandler {
+	return UserInputHandler{}
+}
+
+func (u UserInputHandler) GetUserInput() (string, error) {
+	return "TODO: IMPLEMENT", nil
 }

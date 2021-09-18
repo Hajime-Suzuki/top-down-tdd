@@ -6,7 +6,6 @@ package mocks
 
 import (
 	reflect "reflect"
-	userinput "top-down-tdd/user-input"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -35,11 +34,12 @@ func (m *MockInputHandler) EXPECT() *MockInputHandlerMockRecorder {
 }
 
 // GetUserInput mocks base method.
-func (m *MockInputHandler) GetUserInput() userinput.UserInput {
+func (m *MockInputHandler) GetUserInput() (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserInput")
-	ret0, _ := ret[0].(userinput.UserInput)
-	return ret0
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // GetUserInput indicates an expected call of GetUserInput.
