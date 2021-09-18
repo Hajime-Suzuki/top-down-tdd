@@ -49,7 +49,7 @@ func (mr *MockPresenterMockRecorder) ShowBoard(arg0 interface{}) *gomock.Call {
 }
 
 // ShowMessage mocks base method.
-func (m *MockPresenter) ShowMessage(arg0 abstractions.User) string {
+func (m *MockPresenter) ShowMessage(arg0 abstractions.Player) string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ShowMessage", arg0)
 	ret0, _ := ret[0].(string)

@@ -4,5 +4,5 @@ package abstractions
 
 type Presenter interface {
 	ShowBoard(board Board) string
-	ShowMessage(user User) string
+	ShowMessage(player Player) string
 }
