@@ -4,10 +4,11 @@ package game
 
 import (
 	"github.com/google/wire"
+	"top-down-tdd/abstractions"
 	. "top-down-tdd/user-input"
 )
 
-func InitializeGame() (Game, error) {
+func InitializeGame() (abstractions.Game, error) {
 	wire.Build(NewGame, NewUserInput)
-	return Game{}, nil
+	return game{}, nil
 }

@@ -6,13 +6,14 @@
 package game
 
 import (
+	"top-down-tdd/abstractions"
 	"top-down-tdd/user-input"
 )
 
 // Injectors from game-wire.go:
 
-func InitializeGame() (Game, error) {
+func InitializeGame() (abstractions.Game, error) {
 	inputHandler := userinput.NewUserInput()
-	game := NewGame(inputHandler)
-	return game, nil
+	abstractionsGame := NewGame(inputHandler)
+	return abstractionsGame, nil
 }

@@ -40,7 +40,7 @@ var _ = Describe("Game", func() {
 		userInputMock.EXPECT().GetUserInput().Return("name 1")
 		userInputMock.EXPECT().GetUserInput().Return("name 2")
 
-		g := NewGame(userInputMock)
+		g := game{userInputMock}
 
 		// when
 		g.InitGame()
@@ -51,8 +51,8 @@ var _ = Describe("Game", func() {
 		p2 := player.NewPlayer("name 2")
 		ps := []player.Player{p1, p2}
 
-		Expect(g.GetBoard()).To(Equal(b))
-		Expect(g.GetPlayers()).To(Equal(ps))
+		Expect(g.board).To(Equal(b))
+		Expect(g.players).To(Equal(ps))
 	})
 
 })
