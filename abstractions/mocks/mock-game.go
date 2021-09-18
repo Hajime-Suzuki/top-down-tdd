@@ -33,14 +33,62 @@ func (m *MockGame) EXPECT() *MockGameMockRecorder {
 	return m.recorder
 }
 
-// StartGame mocks base method.
-func (m *MockGame) StartGame() {
+// InitGame mocks base method.
+func (m *MockGame) InitGame() {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "StartGame")
+	m.ctrl.Call(m, "InitGame")
 }
 
-// StartGame indicates an expected call of StartGame.
-func (mr *MockGameMockRecorder) StartGame() *gomock.Call {
+// InitGame indicates an expected call of InitGame.
+func (mr *MockGameMockRecorder) InitGame() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StartGame", reflect.TypeOf((*MockGame)(nil).StartGame))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InitGame", reflect.TypeOf((*MockGame)(nil).InitGame))
+}
+
+// IsEnd mocks base method.
+func (m *MockGame) IsEnd() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "IsEnd")
+}
+
+// IsEnd indicates an expected call of IsEnd.
+func (mr *MockGameMockRecorder) IsEnd() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsEnd", reflect.TypeOf((*MockGame)(nil).IsEnd))
+}
+
+// SetMark mocks base method.
+func (m *MockGame) SetMark() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "SetMark")
+}
+
+// SetMark indicates an expected call of SetMark.
+func (mr *MockGameMockRecorder) SetMark() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetMark", reflect.TypeOf((*MockGame)(nil).SetMark))
+}
+
+// ShowBoard mocks base method.
+func (m *MockGame) ShowBoard() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "ShowBoard")
+}
+
+// ShowBoard indicates an expected call of ShowBoard.
+func (mr *MockGameMockRecorder) ShowBoard() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ShowBoard", reflect.TypeOf((*MockGame)(nil).ShowBoard))
+}
+
+// ShowWinnerMessage mocks base method.
+func (m *MockGame) ShowWinnerMessage() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "ShowWinnerMessage")
+}
+
+// ShowWinnerMessage indicates an expected call of ShowWinnerMessage.
+func (mr *MockGameMockRecorder) ShowWinnerMessage() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ShowWinnerMessage", reflect.TypeOf((*MockGame)(nil).ShowWinnerMessage))
 }
