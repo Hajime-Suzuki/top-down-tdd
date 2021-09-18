@@ -1,33 +1,56 @@
 package game
 
-import "top-down-tdd/abstractions"
+import (
+	"top-down-tdd/abstractions"
+	"top-down-tdd/board"
+	"top-down-tdd/player"
+)
 
 type game struct {
-	userInputHandler abstractions.InputHandler
+	board   abstractions.Board
+	players []abstractions.Player
+
+	inputHandler abstractions.InputHandler
 }
 
 func NewGame(inputHandler abstractions.InputHandler) abstractions.Game {
-	return game{
-		userInputHandler: inputHandler,
+	return &game{
+		inputHandler: inputHandler,
 	}
 }
 
-func (g game) InitGame() {
+func (g *game) InitGame() {
+	g.board = board.NewBoard()
+
+	userName1, err := g.inputHandler.GetUserInput()
+	if err != nil {
+		panic(err)
+	}
+
+	userName2, err := g.inputHandler.GetUserInput()
+
+	if err != nil {
+		panic(err)
+	}
+
+	g.players = []abstractions.Player{
+		player.NewPlayer(userName1),
+		player.NewPlayer(userName2),
+	}
+}
+
+func (g *game) SetMark() {
 
 }
 
-func (g game) SetMark() {
-
-}
-
-func (g game) IsOver() bool {
+func (g *game) IsOver() bool {
 	return true
 }
 
-func (g game) ShowBoard() {
+func (g *game) ShowBoard() {
 
 }
 
-func (g game) ShowResultMessage() {
+func (g *game) ShowResultMessage() {
 
 }

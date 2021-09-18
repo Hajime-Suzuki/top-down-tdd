@@ -2,6 +2,7 @@ package game
 
 import (
 	"testing"
+	"top-down-tdd/abstractions"
 	"top-down-tdd/abstractions/mocks"
 	"top-down-tdd/board"
 	"top-down-tdd/player"
@@ -27,32 +28,36 @@ var _ = Describe("Game", func() {
 	})
 
 	Context("InitGame", func() {
-		//******
-		// ask player names
-		// create players
-		// create board
-		//******
+		It("create board and players", func() {
+			//******
+			// ask player names
+			// create board
+			// create players
+			//******
 
-		// given
-		defer mockCtrl.Finish()
-		userInputMock := mocks.NewMockInputHandler(mockCtrl)
+			// given
+			defer mockCtrl.Finish()
 
-		userInputMock.EXPECT().GetUserInput().Return("name 1")
-		userInputMock.EXPECT().GetUserInput().Return("name 2")
+			inputHandler := mocks.NewMockInputHandler(mockCtrl)
 
-		g := game{userInputMock}
+			inputHandler.EXPECT().GetUserInput().Return("name 1", nil)
 
-		// when
-		g.InitGame()
+			inputHandler.EXPECT().GetUserInput().Return("name 2", nil)
 
-		// then
-		b := board.NewBoard()
-		p1 := player.NewPlayer("name 1")
-		p2 := player.NewPlayer("name 2")
-		ps := []player.Player{p1, p2}
+			g := game{inputHandler: inputHandler}
 
-		Expect(g.board).To(Equal(b))
-		Expect(g.players).To(Equal(ps))
+			// when
+			g.InitGame()
+
+			// then
+			b := board.NewBoard()
+			p1 := player.NewPlayer("name 1")
+			p2 := player.NewPlayer("name 2")
+			ps := []abstractions.Player{p1, p2}
+
+			Expect(g.board).To(Equal(b))
+			Expect(g.players).To(Equal(ps))
+		})
 	})
 
 })

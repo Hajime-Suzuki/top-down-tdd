@@ -1,7 +1,13 @@
 package board
 
-type Board struct{}
+import "top-down-tdd/abstractions"
 
-func NewBoard() Board {
-	return Board{}
+type board struct{}
+
+func NewBoard() abstractions.Board {
+	return board{}
+}
+
+func (b board) HasWinner() bool {
+	return true
 }
