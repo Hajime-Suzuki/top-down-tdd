@@ -1,54 +1,58 @@
-package game_test
+package game
 
-// import (
-// 	"testing"
+import (
+	"testing"
+	"top-down-tdd/abstractions/mocks"
+	"top-down-tdd/board"
+	"top-down-tdd/player"
 
-// 	"top-down-tdd/abstractions/mocks"
-// 	"top-down-tdd/board"
-// 	"top-down-tdd/user"
-// 	userinput "top-down-tdd/user-input"
+	"github.com/golang/mock/gomock"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
 
-// 	"github.com/golang/mock/gomock"
-// 	. "github.com/onsi/ginkgo"
-// 	. "github.com/onsi/gomega"
-// )
-//TODO: fix main first
-// func TestGame(t *testing.T) {
-// 	RegisterFailHandler(Fail)
-// 	RunSpecs(t, "Game Suite")
-// }
+func TestGame(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Game Suite")
+}
 
-// var _ = Describe("Game", func() {
+var _ = Describe("Game", func() {
 
-// 	var (
-// 		mockCtrl *gomock.Controller
-// 	)
+	var (
+		mockCtrl *gomock.Controller
+	)
 
-// 	BeforeEach(func() {
-// 		mockCtrl = gomock.NewController(GinkgoT())
-// 	})
+	BeforeEach(func() {
+		mockCtrl = gomock.NewController(GinkgoT())
+	})
 
-// 	When("there is winner", func() {
-// 		It("shows correct message", func() {
-// 			defer mockCtrl.Finish()
+	Context("InitGame", func() {
+		//******
+		// ask player names
+		// create players
+		// create board
+		//******
 
-// 			user := user.NewUser("user 1234")
+		// given
+		defer mockCtrl.Finish()
+		userInputMock := mocks.NewMockInputHandler(mockCtrl)
 
-// 			boardMock := mocks.NewMockBoard(mockCtrl)
-// 			boardMock.EXPECT().HasWinner().Times(1).Return(true)
+		userInputMock.EXPECT().GetUserInput().Return("name 1")
+		userInputMock.EXPECT().GetUserInput().Return("name 2")
 
-// 			inputMock := mocks.NewMockInputHandler(mockCtrl)
-// 			inputMock.EXPECT().GetUserInput().Times(1).Return(
-// 				userinput.NewUserInput(0, 0),
-// 			)
+		g := NewGame(userInputMock)
 
-// 			presenterMock := mocks.NewMockPresenter(mockCtrl)
-// 			expectedBoard := board.NewBoard()
-// 			presenterMock.EXPECT().ShowBoard(expectedBoard).Times(1).Return("xxxxxxx")
-// 			presenterMock.EXPECT().ShowMessage(user).Times(1).Return("player 1 won!")
+		// when
+		g.InitGame()
 
-// 			Expect(0).To(Equal(0))
-// 		})
-// 	})
+		// then
+		b := board.NewBoard()
+		p1 := player.NewPlayer("name 1")
+		p2 := player.NewPlayer("name 2")
+		ps := []player.Player{p1, p2}
 
-// })
+		Expect(g.GetBoard()).To(Equal(b))
+		Expect(g.GetPlayers()).To(Equal(ps))
+	})
+
+})
