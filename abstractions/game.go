@@ -5,7 +5,7 @@ package abstractions
 type Game interface {
 	InitGame()
 	SetMark()
-	IsEnd()
+	IsOver() bool
 	ShowBoard()
-	ShowWinnerMessage()
+	ShowResultMessage()
 }

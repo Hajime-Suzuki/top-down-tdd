@@ -45,16 +45,18 @@ func (mr *MockGameMockRecorder) InitGame() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InitGame", reflect.TypeOf((*MockGame)(nil).InitGame))
 }
 
-// IsEnd mocks base method.
-func (m *MockGame) IsEnd() {
+// IsOver mocks base method.
+func (m *MockGame) IsOver() bool {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "IsEnd")
+	ret := m.ctrl.Call(m, "IsOver")
+	ret0, _ := ret[0].(bool)
+	return ret0
 }
 
-// IsEnd indicates an expected call of IsEnd.
-func (mr *MockGameMockRecorder) IsEnd() *gomock.Call {
+// IsOver indicates an expected call of IsOver.
+func (mr *MockGameMockRecorder) IsOver() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsEnd", reflect.TypeOf((*MockGame)(nil).IsEnd))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsOver", reflect.TypeOf((*MockGame)(nil).IsOver))
 }
 
 // SetMark mocks base method.
@@ -81,14 +83,14 @@ func (mr *MockGameMockRecorder) ShowBoard() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ShowBoard", reflect.TypeOf((*MockGame)(nil).ShowBoard))
 }
 
-// ShowWinnerMessage mocks base method.
-func (m *MockGame) ShowWinnerMessage() {
+// ShowResultMessage mocks base method.
+func (m *MockGame) ShowResultMessage() {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "ShowWinnerMessage")
+	m.ctrl.Call(m, "ShowResultMessage")
 }
 
-// ShowWinnerMessage indicates an expected call of ShowWinnerMessage.
-func (mr *MockGameMockRecorder) ShowWinnerMessage() *gomock.Call {
+// ShowResultMessage indicates an expected call of ShowResultMessage.
+func (mr *MockGameMockRecorder) ShowResultMessage() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ShowWinnerMessage", reflect.TypeOf((*MockGame)(nil).ShowWinnerMessage))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ShowResultMessage", reflect.TypeOf((*MockGame)(nil).ShowResultMessage))
 }

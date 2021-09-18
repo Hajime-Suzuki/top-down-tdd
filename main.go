@@ -9,5 +9,12 @@ func main() {
 }
 
 func Start(game abstractions.Game) {
-	game.StartGame()
+	game.InitGame()
+
+	for !game.IsOver() {
+		game.SetMark()
+		game.ShowBoard()
+	}
+
+	game.ShowResultMessage()
 }
