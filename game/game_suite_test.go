@@ -115,4 +115,53 @@ var _ = Describe("Game", func() {
 			subject.ShowBoard()
 		})
 	})
+
+	Context("ShowResultMessage", func() {
+		When("there is winner", func() {
+			It("show a winner message", func() {
+				// given
+				defer mockCtrl.Finish()
+
+				//********************************
+				// 1. get winner mark from board
+				// 2. get player by mark from players
+				// 3. show message like "player 1234 won!"
+				//********************************
+
+				playerName := "John Doe"
+				message := "Joh Doe won!"
+
+				board := mocks.NewMockBoard(mockCtrl)
+				board.EXPECT().GetWinner().Return("o")
+
+				player1 := mocks.NewMockPlayer(mockCtrl)
+				player1.EXPECT().ShowName().Return(playerName)
+				player1.EXPECT().GetMark().Return("o")
+
+				player2 := mocks.NewMockPlayer(mockCtrl)
+				player2.EXPECT().GetMark().Return("x")
+
+				players := []abstractions.Player{
+					player1,
+					player2,
+				}
+
+				presenter := mocks.NewMockPresenter(mockCtrl)
+				presenter.EXPECT().Dispay(message).Times(1)
+
+				subject := game{
+					board:     board,
+					players:   players,
+					presenter: presenter,
+				}
+
+				// when
+				subject.ShowResultMessage()
+			})
+
+			It("show there is no winner", func() {
+				Skip("IMPLEMENT")
+			})
+		})
+	})
 })
