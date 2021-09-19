@@ -60,4 +60,37 @@ var _ = Describe("Game", func() {
 		})
 	})
 
+	Context("IsOver", func() {
+		It("true if game is over", func() {
+			// given
+			defer mockCtrl.Finish()
+
+			board := mocks.NewMockBoard(mockCtrl)
+			board.EXPECT().IsOver().Return(true)
+
+			g := game{board: board}
+
+			// when
+			g.SetMark()
+
+			//then
+			Expect(g.IsOver()).To(Equal(true))
+		})
+		It("true if game is not over", func() {
+			// given
+			defer mockCtrl.Finish()
+
+			board := mocks.NewMockBoard(mockCtrl)
+			board.EXPECT().IsOver().Return(false)
+
+			g := game{board: board}
+
+			// when
+			g.SetMark()
+
+			//then
+			Expect(g.IsOver()).To(Equal(false))
+		})
+	})
+
 })
