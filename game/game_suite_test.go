@@ -39,8 +39,8 @@ var _ = Describe("Game", func() {
 			defer mockCtrl.Finish()
 
 			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			inputHandler.EXPECT().GetUserInput().Return("name 1", nil)
-			inputHandler.EXPECT().GetUserInput().Return("name 2", nil)
+			inputHandler.EXPECT().GetUserInput("Player1: What's your name?").Return("name 1", nil)
+			inputHandler.EXPECT().GetUserInput("Player2: What's your name?").Return("name 2", nil)
 
 			subject := game{inputHandler: inputHandler}
 
@@ -71,6 +71,7 @@ var _ = Describe("Game", func() {
 
 		currentPlayer := mocks.NewMockPlayer(mockCtrl)
 		currentPlayer.EXPECT().GetMark().Return("o")
+		currentPlayer.EXPECT().ShowName().Return("John Doe")
 
 		nextPlayer := mocks.NewMockPlayer(mockCtrl)
 		players := []abstractions.Player{
@@ -78,10 +79,24 @@ var _ = Describe("Game", func() {
 			nextPlayer,
 		}
 
+		message := `
+		John Doe, select position:
+		1 2 3
+		o 4 o
+		x 5 x
+		`
+
 		inputHandler := mocks.NewMockInputHandler(mockCtrl)
-		inputHandler.EXPECT().GetUserInput().Return("3", nil)
+		inputHandler.EXPECT().GetUserInput(message).Return("3", nil)
 
 		board := mocks.NewMockBoard(mockCtrl)
+		board.EXPECT().Show().Return(
+			`
+			1 2 3
+			o 4 o
+			x 5 x
+			`,
+		)
 
 		updatedBoard := mocks.NewMockBoard(mockCtrl)
 		board.EXPECT().Update("o", "3").Times(1).Return(updatedBoard, nil)
