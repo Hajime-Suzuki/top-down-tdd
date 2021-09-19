@@ -9,6 +9,6 @@ func NewUserInput() abstractions.InputHandler {
 	return UserInputHandler{}
 }
 
-func (u UserInputHandler) GetUserInput() (string, error) {
+func (u UserInputHandler) GetUserInput(message string) (string, error) {
 	return "TODO: IMPLEMENT", nil
 }

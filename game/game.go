@@ -25,12 +25,12 @@ func NewGame(inputHandler abstractions.InputHandler) abstractions.Game {
 func (g *game) InitGame() {
 	g.board = board.NewBoard()
 
-	userName1, err := g.inputHandler.GetUserInput()
+	userName1, err := g.inputHandler.GetUserInput("Player1: What's your name?")
 	if err != nil {
 		panic(err)
 	}
 
-	userName2, err := g.inputHandler.GetUserInput()
+	userName2, err := g.inputHandler.GetUserInput("Player2: What's your name?")
 
 	if err != nil {
 		panic(err)
@@ -43,7 +43,8 @@ func (g *game) InitGame() {
 }
 
 func (g *game) SetMark() {
-
+	//TODO: HERE
+	g.inputHandler.GetUserInput("")
 }
 
 func (g *game) IsOver() bool {

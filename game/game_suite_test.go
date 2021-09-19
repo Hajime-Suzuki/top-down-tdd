@@ -59,64 +59,67 @@ var _ = Describe("Game", func() {
 	})
 
 	Context("SetMark", func() {
-		//******
-		// get current player
-		// ask player input
-		// update board
-		// update players' turn
-		//******
+		It("set mark", func() {
+			//******
+			// get current player
+			// ask player input
+			// update board
+			// update players' turn
+			//******
 
-		// given
-		defer mockCtrl.Finish()
+			// given
+			defer mockCtrl.Finish()
 
-		currentPlayer := mocks.NewMockPlayer(mockCtrl)
-		currentPlayer.EXPECT().GetMark().Return("o")
-		currentPlayer.EXPECT().ShowName().Return("John Doe")
+			currentPlayer := mocks.NewMockPlayer(mockCtrl)
+			currentPlayer.EXPECT().GetMark().Return("o")
+			currentPlayer.EXPECT().ShowName().Return("John Doe")
 
-		nextPlayer := mocks.NewMockPlayer(mockCtrl)
-		players := []abstractions.Player{
-			currentPlayer,
-			nextPlayer,
-		}
+			nextPlayer := mocks.NewMockPlayer(mockCtrl)
+			players := []abstractions.Player{
+				currentPlayer,
+				nextPlayer,
+			}
 
-		message := `
+			message := `
 		John Doe, select position:
 		1 2 3
 		o 4 o
 		x 5 x
 		`
 
-		inputHandler := mocks.NewMockInputHandler(mockCtrl)
-		inputHandler.EXPECT().GetUserInput(message).Return("3", nil)
+			inputHandler := mocks.NewMockInputHandler(mockCtrl)
+			inputHandler.EXPECT().GetUserInput(message).Return("3", nil)
 
-		board := mocks.NewMockBoard(mockCtrl)
-		board.EXPECT().Show().Return(
-			`
+			board := mocks.NewMockBoard(mockCtrl)
+			board.EXPECT().Show().Return(
+				`
 			1 2 3
 			o 4 o
 			x 5 x
 			`,
-		)
+			)
 
-		updatedBoard := mocks.NewMockBoard(mockCtrl)
-		board.EXPECT().Update("o", "3").Times(1).Return(updatedBoard, nil)
+			updatedBoard := mocks.NewMockBoard(mockCtrl)
+			board.EXPECT().Update("o", "3").Times(1).Return(updatedBoard, nil)
 
-		subject := game{
-			inputHandler: inputHandler,
-			players:      players,
-		}
+			subject := game{
+				inputHandler: inputHandler,
+				players:      players,
+			}
 
-		// when
-		subject.SetMark()
+			// when
+			subject.SetMark()
 
-		updatedPlayers := []abstractions.Player{
-			nextPlayer,
-			currentPlayer,
-		}
+			updatedPlayers := []abstractions.Player{
+				nextPlayer,
+				currentPlayer,
+			}
 
-		//then
-		Expect(subject.players).To(Equal(updatedPlayers))
-		Expect(subject.board).To(Equal(updatedBoard))
+			//then
+			Expect(subject.players).To(Equal(updatedPlayers))
+			Expect(subject.board).To(Equal(updatedBoard))
+
+		})
 	})
 
 	Context("IsOver", func() {
