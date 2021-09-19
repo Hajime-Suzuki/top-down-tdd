@@ -44,7 +44,7 @@ func (g *game) SetMark() {
 }
 
 func (g *game) IsOver() bool {
-	return true
+	return g.board.IsOver()
 }
 
 func (g *game) ShowBoard() {

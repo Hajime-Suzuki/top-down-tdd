@@ -8,6 +8,6 @@ func NewBoard() abstractions.Board {
 	return board{}
 }
 
-func (b board) HasWinner() bool {
+func (b board) IsOver() bool {
 	return true
 }

@@ -39,15 +39,13 @@ var _ = Describe("Game", func() {
 			defer mockCtrl.Finish()
 
 			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-
 			inputHandler.EXPECT().GetUserInput().Return("name 1", nil)
-
 			inputHandler.EXPECT().GetUserInput().Return("name 2", nil)
 
-			g := game{inputHandler: inputHandler}
+			subject := game{inputHandler: inputHandler}
 
 			// when
-			g.InitGame()
+			subject.InitGame()
 
 			// then
 			b := board.NewBoard()
@@ -55,8 +53,8 @@ var _ = Describe("Game", func() {
 			p2 := player.NewPlayer("name 2")
 			ps := []abstractions.Player{p1, p2}
 
-			Expect(g.board).To(Equal(b))
-			Expect(g.players).To(Equal(ps))
+			Expect(subject.board).To(Equal(b))
+			Expect(subject.players).To(Equal(ps))
 		})
 	})
 
@@ -66,30 +64,31 @@ var _ = Describe("Game", func() {
 			defer mockCtrl.Finish()
 
 			board := mocks.NewMockBoard(mockCtrl)
-			board.EXPECT().IsOver().Return(true)
+			board.EXPECT().IsOver().Times(1).Return(true)
 
-			g := game{board: board}
+			subject := game{board: board}
 
 			// when
-			g.SetMark()
+			res := subject.IsOver()
 
 			//then
-			Expect(g.IsOver()).To(Equal(true))
+			Expect(res).To(Equal(true))
 		})
-		It("true if game is not over", func() {
+
+		It("false if game is not over", func() {
 			// given
 			defer mockCtrl.Finish()
 
 			board := mocks.NewMockBoard(mockCtrl)
-			board.EXPECT().IsOver().Return(false)
+			board.EXPECT().IsOver().Times(1).Return(false)
 
-			g := game{board: board}
+			subject := game{board: board}
 
 			// when
-			g.SetMark()
+			res := subject.IsOver()
 
 			//then
-			Expect(g.IsOver()).To(Equal(false))
+			Expect(res).To(Equal(false))
 		})
 	})
 
