@@ -159,7 +159,9 @@ var _ = Describe("Game", func() {
 				// when
 				subject.ShowResultMessage()
 			})
+		})
 
+		When("there is no winner", func() {
 			It("show draw message", func() {
 				// given
 				defer mockCtrl.Finish()
@@ -187,29 +189,31 @@ var _ = Describe("Game", func() {
 				subject.ShowResultMessage()
 			})
 
-			It("error when game is not over yet", func() {
-				// in case ShowResultMessage is called before game is over, error should be thrown
-
-				// given
-				defer mockCtrl.Finish()
-
-				board := mocks.NewMockBoard(mockCtrl)
-				board.EXPECT().IsOver().Return(false)
-
-				presenter := mocks.NewMockPresenter(mockCtrl)
-				presenter.EXPECT().Dispay(gomock.Any()).Times(0)
-
-				subject := game{
-					board:     board,
-					presenter: presenter,
-				}
-
-				// when
-				e := subject.ShowResultMessage()
-
-				//then
-				Expect(e.Error()).To(Equal("Game is not over yet"))
-			})
 		})
+
+		It("thrown error when game is not over yet", func() {
+			// in case ShowResultMessage is called before game is over, error should be thrown
+
+			// given
+			defer mockCtrl.Finish()
+
+			board := mocks.NewMockBoard(mockCtrl)
+			board.EXPECT().IsOver().Return(false)
+
+			presenter := mocks.NewMockPresenter(mockCtrl)
+			presenter.EXPECT().Dispay(gomock.Any()).Times(0)
+
+			subject := game{
+				board:     board,
+				presenter: presenter,
+			}
+
+			// when
+			e := subject.ShowResultMessage()
+
+			//then
+			Expect(e.Error()).To(Equal("Game is not over yet"))
+		})
+
 	})
 })
