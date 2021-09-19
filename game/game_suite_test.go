@@ -160,7 +160,29 @@ var _ = Describe("Game", func() {
 			})
 
 			It("show there is no winner", func() {
-				Skip("IMPLEMENT TEST")
+				// given
+				defer mockCtrl.Finish()
+
+				//********************************
+				// 1. get winner mark from board
+				// 2. if there is no winner, show message like "Draw!"
+				//********************************
+
+				message := "Draw!"
+
+				board := mocks.NewMockBoard(mockCtrl)
+				board.EXPECT().GetWinner().Return("")
+
+				presenter := mocks.NewMockPresenter(mockCtrl)
+				presenter.EXPECT().Dispay(message).Times(1)
+
+				subject := game{
+					board:     board,
+					presenter: presenter,
+				}
+
+				// when
+				subject.ShowResultMessage()
 			})
 		})
 	})
