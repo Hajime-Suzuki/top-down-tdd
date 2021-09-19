@@ -58,6 +58,7 @@ func (g *game) ShowResultMessage() {
 	winnerMark := g.board.GetWinner()
 
 	if winnerMark == "" {
+		g.presenter.Dispay("Draw!")
 		return
 	}
 
