@@ -102,13 +102,14 @@ var _ = Describe("Game", func() {
 			- o -
 			- - -
 			`
+
 			board := mocks.NewMockBoard(mockCtrl)
 			board.EXPECT().Show().Return(boardStr)
 
 			presenter := mocks.NewMockPresenter(mockCtrl)
 			presenter.EXPECT().Dispay(boardStr).Times(1)
 
-			subject := game{board: board}
+			subject := game{board: board, presenter: presenter}
 
 			// when
 			subject.ShowBoard()

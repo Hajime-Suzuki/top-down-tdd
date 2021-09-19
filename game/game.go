@@ -11,6 +11,7 @@ type game struct {
 	players []abstractions.Player
 
 	inputHandler abstractions.InputHandler
+	presenter    abstractions.Presenter
 }
 
 func NewGame(inputHandler abstractions.InputHandler) abstractions.Game {
@@ -48,7 +49,8 @@ func (g *game) IsOver() bool {
 }
 
 func (g *game) ShowBoard() {
-
+	b := g.board.Show()
+	g.presenter.Dispay(b)
 }
 
 func (g *game) ShowResultMessage() {

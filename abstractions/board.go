@@ -4,4 +4,5 @@ package abstractions
 
 type Board interface {
 	IsOver() bool
+	Show() string
 }

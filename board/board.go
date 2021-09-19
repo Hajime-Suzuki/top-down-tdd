@@ -11,3 +11,7 @@ func NewBoard() abstractions.Board {
 func (b board) IsOver() bool {
 	return true
 }
+
+func (b board) Show() string {
+	return "TODO: IMPLEMENT"
+}

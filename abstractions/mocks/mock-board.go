@@ -46,3 +46,17 @@ func (mr *MockBoardMockRecorder) IsOver() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsOver", reflect.TypeOf((*MockBoard)(nil).IsOver))
 }
+
+// Show mocks base method.
+func (m *MockBoard) Show() string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Show")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// Show indicates an expected call of Show.
+func (mr *MockBoardMockRecorder) Show() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Show", reflect.TypeOf((*MockBoard)(nil).Show))
+}

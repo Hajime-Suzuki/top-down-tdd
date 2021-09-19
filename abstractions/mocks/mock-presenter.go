@@ -34,18 +34,16 @@ func (m *MockPresenter) EXPECT() *MockPresenterMockRecorder {
 	return m.recorder
 }
 
-// ShowBoard mocks base method.
-func (m *MockPresenter) ShowBoard(arg0 abstractions.Board) string {
+// Dispay mocks base method.
+func (m *MockPresenter) Dispay(arg0 string) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ShowBoard", arg0)
-	ret0, _ := ret[0].(string)
-	return ret0
+	m.ctrl.Call(m, "Dispay", arg0)
 }
 
-// ShowBoard indicates an expected call of ShowBoard.
-func (mr *MockPresenterMockRecorder) ShowBoard(arg0 interface{}) *gomock.Call {
+// Dispay indicates an expected call of Dispay.
+func (mr *MockPresenterMockRecorder) Dispay(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ShowBoard", reflect.TypeOf((*MockPresenter)(nil).ShowBoard), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Dispay", reflect.TypeOf((*MockPresenter)(nil).Dispay), arg0)
 }
 
 // ShowMessage mocks base method.
