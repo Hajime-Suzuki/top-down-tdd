@@ -92,4 +92,26 @@ var _ = Describe("Game", func() {
 		})
 	})
 
+	Context("ShowBoard", func() {
+		It("show board", func() {
+			// given
+			defer mockCtrl.Finish()
+
+			boardStr := `
+			- - -
+			- o -
+			- - -
+			`
+			board := mocks.NewMockBoard(mockCtrl)
+			board.EXPECT().Show().Return(boardStr)
+
+			presenter := mocks.NewMockPresenter(mockCtrl)
+			presenter.EXPECT().Dispay(boardStr).Times(1)
+
+			subject := game{board: board}
+
+			// when
+			subject.ShowBoard()
+		})
+	})
 })
