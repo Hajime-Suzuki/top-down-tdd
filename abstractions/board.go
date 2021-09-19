@@ -5,4 +5,5 @@ package abstractions
 type Board interface {
 	IsOver() bool
 	Show() string
+	GetWinner() string // returns mark
 }

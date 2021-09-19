@@ -4,4 +4,5 @@ package abstractions
 
 type Player interface {
 	ShowName() string
+	GetMark() string
 }

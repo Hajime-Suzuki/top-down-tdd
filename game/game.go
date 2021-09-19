@@ -1,6 +1,7 @@
 package game
 
 import (
+	"fmt"
 	"top-down-tdd/abstractions"
 	"top-down-tdd/board"
 	"top-down-tdd/player"
@@ -54,5 +55,20 @@ func (g *game) ShowBoard() {
 }
 
 func (g *game) ShowResultMessage() {
+	winnerMark := g.board.GetWinner()
 
+	if winnerMark == "" {
+		return
+	}
+
+	var player abstractions.Player
+
+	for _, p := range g.players {
+		if p.GetMark() == winnerMark {
+			player = p
+		}
+	}
+
+	msg := fmt.Sprintf("%s won!", player.ShowName())
+	g.presenter.Dispay(msg)
 }

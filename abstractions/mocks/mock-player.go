@@ -33,6 +33,20 @@ func (m *MockPlayer) EXPECT() *MockPlayerMockRecorder {
 	return m.recorder
 }
 
+// GetMark mocks base method.
+func (m *MockPlayer) GetMark() string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetMark")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// GetMark indicates an expected call of GetMark.
+func (mr *MockPlayerMockRecorder) GetMark() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetMark", reflect.TypeOf((*MockPlayer)(nil).GetMark))
+}
+
 // ShowName mocks base method.
 func (m *MockPlayer) ShowName() string {
 	m.ctrl.T.Helper()

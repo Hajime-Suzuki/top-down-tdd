@@ -33,6 +33,20 @@ func (m *MockBoard) EXPECT() *MockBoardMockRecorder {
 	return m.recorder
 }
 
+// GetWinner mocks base method.
+func (m *MockBoard) GetWinner() string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWinner")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// GetWinner indicates an expected call of GetWinner.
+func (mr *MockBoardMockRecorder) GetWinner() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWinner", reflect.TypeOf((*MockBoard)(nil).GetWinner))
+}
+
 // IsOver mocks base method.
 func (m *MockBoard) IsOver() bool {
 	m.ctrl.T.Helper()

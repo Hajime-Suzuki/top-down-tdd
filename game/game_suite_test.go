@@ -129,7 +129,7 @@ var _ = Describe("Game", func() {
 				//********************************
 
 				playerName := "John Doe"
-				message := "Joh Doe won!"
+				message := "John Doe won!"
 
 				board := mocks.NewMockBoard(mockCtrl)
 				board.EXPECT().GetWinner().Return("o")
@@ -160,7 +160,7 @@ var _ = Describe("Game", func() {
 			})
 
 			It("show there is no winner", func() {
-				Skip("IMPLEMENT")
+				Skip("IMPLEMENT TEST")
 			})
 		})
 	})

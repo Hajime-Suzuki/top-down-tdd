@@ -11,3 +11,7 @@ func NewPlayer(name string) Player {
 func (p Player) ShowName() string {
 	return p.name
 }
+
+func (p Player) GetMark() string {
+	return "TODO: IMPLEMENT"
+}

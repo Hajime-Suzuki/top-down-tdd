@@ -15,3 +15,7 @@ func (b board) IsOver() bool {
 func (b board) Show() string {
 	return "TODO: IMPLEMENT"
 }
+
+func (b board) GetWinner() string {
+	return "TODO: IMPLEMENT"
+}
