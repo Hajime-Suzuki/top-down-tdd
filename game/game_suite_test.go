@@ -39,8 +39,8 @@ var _ = Describe("Game", func() {
 			defer mockCtrl.Finish()
 
 			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			inputHandler.EXPECT().GetUserInput("Player1: What's your name?").Return("name 1", nil)
-			inputHandler.EXPECT().GetUserInput("Player2: What's your name?").Return("name 2", nil)
+			inputHandler.EXPECT().GetUserInput("Player1: What's your name?").Return("name 1")
+			inputHandler.EXPECT().GetUserInput("Player2: What's your name?").Return("name 2")
 
 			subject := game{inputHandler: inputHandler}
 
@@ -59,11 +59,12 @@ var _ = Describe("Game", func() {
 	})
 
 	Context("SetMark", func() {
-		It("set mark", func() {
+		It("set mark if user input is valid", func() {
+			//TODO: make players struct
 			//******
-			// get current player
+			// get current player and its mark
 			// ask player input
-			// update board
+			// update board with mark and player input
 			// update players' turn
 			//******
 
@@ -72,53 +73,69 @@ var _ = Describe("Game", func() {
 
 			currentPlayer := mocks.NewMockPlayer(mockCtrl)
 			currentPlayer.EXPECT().GetMark().Return("o")
-			currentPlayer.EXPECT().ShowName().Return("John Doe")
+			currentPlayer.EXPECT().ShowName().MinTimes(1).Return("John Doe")
 
 			nextPlayer := mocks.NewMockPlayer(mockCtrl)
+			// used only for assertion. remove later
+			nextPlayer.EXPECT().ShowName().AnyTimes().Return("user2")
+
 			players := []abstractions.Player{
 				currentPlayer,
 				nextPlayer,
 			}
 
 			message := `
-		John Doe, select position:
-		1 2 3
-		o 4 o
-		x 5 x
-		`
+	John Doe, select position:
+	1 2 3
+	o 4 o
+	x 5 x
+	`
 
 			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			inputHandler.EXPECT().GetUserInput(message).Return("3", nil)
+			inputHandler.EXPECT().GetUserInput(message).Times(1).Return("3")
 
 			board := mocks.NewMockBoard(mockCtrl)
+			//TODO: find a better way to achieve this
 			board.EXPECT().Show().Return(
-				`
-			1 2 3
-			o 4 o
-			x 5 x
-			`,
+				`1 2 3
+	o 4 o
+	x 5 x`,
 			)
 
-			updatedBoard := mocks.NewMockBoard(mockCtrl)
+			updatedBoard := mocks.NewMockBoard(gomock.NewController(GinkgoT()))
+
 			board.EXPECT().Update("o", "3").Times(1).Return(updatedBoard, nil)
 
 			subject := game{
 				inputHandler: inputHandler,
 				players:      players,
+				board:        board,
 			}
 
 			// when
 			subject.SetMark()
 
+			//then
 			updatedPlayers := []abstractions.Player{
 				nextPlayer,
 				currentPlayer,
 			}
 
-			//then
-			Expect(subject.players).To(Equal(updatedPlayers))
-			Expect(subject.board).To(Equal(updatedBoard))
+			// fmt.Println(subject.players[0].ShowName())
+			// fmt.Println(updatedPlayers[0].ShowName())
 
+			// fmt.Println(subject.players[0] == updatedPlayers[0])
+			// fmt.Println(subject.players[0] == updatedPlayers[1])
+
+			//TODO: Expect doesn't work as expected when players are NOT swapped in implementation.
+			Expect(subject.players[0]).To(Equal(updatedPlayers[0]))      //! Passes even if players are not swapped
+			Expect(subject.players[0] == updatedPlayers[0]).To(BeTrue()) //! Fails as expected when players are not swapped
+
+			Expect(subject.board).To(Equal(updatedBoard))
+		})
+
+		It("retry getting user input if invalid", func() {
+			Skip("TODO: IMPLEMENT")
 		})
 	})
 

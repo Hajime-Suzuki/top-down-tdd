@@ -6,6 +6,7 @@ package mocks
 
 import (
 	reflect "reflect"
+	abstractions "top-down-tdd/abstractions"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -73,4 +74,19 @@ func (m *MockBoard) Show() string {
 func (mr *MockBoardMockRecorder) Show() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Show", reflect.TypeOf((*MockBoard)(nil).Show))
+}
+
+// Update mocks base method.
+func (m *MockBoard) Update(arg0, arg1 string) (abstractions.Board, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Update", arg0, arg1)
+	ret0, _ := ret[0].(abstractions.Board)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Update indicates an expected call of Update.
+func (mr *MockBoardMockRecorder) Update(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockBoard)(nil).Update), arg0, arg1)
 }

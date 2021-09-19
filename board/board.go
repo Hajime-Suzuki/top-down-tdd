@@ -19,3 +19,8 @@ func (b board) Show() string {
 func (b board) GetWinner() string {
 	return "TODO: IMPLEMENT"
 }
+
+func (b board) Update(mark string, position string) (abstractions.Board, error) {
+	//TODO: IMPLEMENT
+	return board{}, nil
+}

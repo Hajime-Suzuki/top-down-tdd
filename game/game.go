@@ -25,16 +25,9 @@ func NewGame(inputHandler abstractions.InputHandler) abstractions.Game {
 func (g *game) InitGame() {
 	g.board = board.NewBoard()
 
-	userName1, err := g.inputHandler.GetUserInput("Player1: What's your name?")
-	if err != nil {
-		panic(err)
-	}
+	userName1 := g.inputHandler.GetUserInput("Player1: What's your name?")
 
-	userName2, err := g.inputHandler.GetUserInput("Player2: What's your name?")
-
-	if err != nil {
-		panic(err)
-	}
+	userName2 := g.inputHandler.GetUserInput("Player2: What's your name?")
 
 	g.players = []abstractions.Player{
 		player.NewPlayer(userName1),
@@ -43,8 +36,25 @@ func (g *game) InitGame() {
 }
 
 func (g *game) SetMark() {
-	//TODO: HERE
-	g.inputHandler.GetUserInput("")
+	p := g.players[0]
+
+	input := g.inputHandler.GetUserInput(fmt.Sprintf(`
+	%s, select position:
+	%s
+	`, p.ShowName(), g.board.Show()))
+
+	updated, err := g.board.Update(p.GetMark(), input)
+
+	if err != nil {
+		// when:
+		// input is not number
+		// input is not within available spot
+		panic("TODO: handle.")
+	}
+
+	g.board = updated
+	//TODO: order players programatically in case there are more than 2 players
+	g.players = []abstractions.Player{g.players[1], g.players[0]}
 }
 
 func (g *game) IsOver() bool {

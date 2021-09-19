@@ -34,12 +34,11 @@ func (m *MockInputHandler) EXPECT() *MockInputHandlerMockRecorder {
 }
 
 // GetUserInput mocks base method.
-func (m *MockInputHandler) GetUserInput(arg0 string) (string, error) {
+func (m *MockInputHandler) GetUserInput(arg0 string) string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserInput", arg0)
 	ret0, _ := ret[0].(string)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	return ret0
 }
 
 // GetUserInput indicates an expected call of GetUserInput.

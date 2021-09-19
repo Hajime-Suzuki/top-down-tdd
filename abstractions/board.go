@@ -6,4 +6,5 @@ type Board interface {
 	IsOver() bool
 	Show() string
 	GetWinner() string // returns mark
+	Update(mark string, position string) (Board, error)
 }
