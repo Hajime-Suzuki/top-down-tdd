@@ -132,6 +132,7 @@ var _ = Describe("Game", func() {
 				message := "John Doe won!"
 
 				board := mocks.NewMockBoard(mockCtrl)
+				board.EXPECT().IsOver().Return(true)
 				board.EXPECT().GetWinner().Return("o")
 
 				player1 := mocks.NewMockPlayer(mockCtrl)
@@ -159,7 +160,7 @@ var _ = Describe("Game", func() {
 				subject.ShowResultMessage()
 			})
 
-			It("show there is no winner", func() {
+			It("show draw message", func() {
 				// given
 				defer mockCtrl.Finish()
 
@@ -171,6 +172,7 @@ var _ = Describe("Game", func() {
 				message := "Draw!"
 
 				board := mocks.NewMockBoard(mockCtrl)
+				board.EXPECT().IsOver().Return(true)
 				board.EXPECT().GetWinner().Return("")
 
 				presenter := mocks.NewMockPresenter(mockCtrl)
@@ -183,6 +185,26 @@ var _ = Describe("Game", func() {
 
 				// when
 				subject.ShowResultMessage()
+			})
+
+			It("error when game is not over yet", func() {
+				// given
+				defer mockCtrl.Finish()
+
+				board := mocks.NewMockBoard(mockCtrl)
+				board.EXPECT().IsOver().Return(false)
+
+				presenter := mocks.NewMockPresenter(mockCtrl)
+				presenter.EXPECT().Dispay(gomock.Any()).Times(0)
+
+				subject := game{
+					board:     board,
+					presenter: presenter,
+				}
+
+				// when
+				res := subject.ShowResultMessage()
+				Expect(res).NotTo(BeNil())
 			})
 		})
 	})
