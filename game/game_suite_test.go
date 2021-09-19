@@ -58,6 +58,52 @@ var _ = Describe("Game", func() {
 		})
 	})
 
+	Context("SetMark", func() {
+		//******
+		// get current player
+		// ask player input
+		// update board
+		// update players' turn
+		//******
+
+		// given
+		defer mockCtrl.Finish()
+
+		currentPlayer := mocks.NewMockPlayer(mockCtrl)
+		currentPlayer.EXPECT().GetMark().Return("o")
+
+		nextPlayer := mocks.NewMockPlayer(mockCtrl)
+		players := []abstractions.Player{
+			currentPlayer,
+			nextPlayer,
+		}
+
+		inputHandler := mocks.NewMockInputHandler(mockCtrl)
+		inputHandler.EXPECT().GetUserInput().Return("3", nil)
+
+		board := mocks.NewMockBoard(mockCtrl)
+
+		updatedBoard := mocks.NewMockBoard(mockCtrl)
+		board.EXPECT().Update("o", "3").Times(1).Return(updatedBoard, nil)
+
+		subject := game{
+			inputHandler: inputHandler,
+			players:      players,
+		}
+
+		// when
+		subject.SetMark()
+
+		updatedPlayers := []abstractions.Player{
+			nextPlayer,
+			currentPlayer,
+		}
+
+		//then
+		Expect(subject.players).To(Equal(updatedPlayers))
+		Expect(subject.board).To(Equal(updatedBoard))
+	})
+
 	Context("IsOver", func() {
 		It("true if game is over", func() {
 			// given
