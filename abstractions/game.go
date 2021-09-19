@@ -7,5 +7,5 @@ type Game interface {
 	SetMark()
 	IsOver() bool
 	ShowBoard()
-	ShowResultMessage()
+	ShowResultMessage() error
 }

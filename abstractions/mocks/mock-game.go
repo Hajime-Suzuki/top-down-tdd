@@ -84,9 +84,11 @@ func (mr *MockGameMockRecorder) ShowBoard() *gomock.Call {
 }
 
 // ShowResultMessage mocks base method.
-func (m *MockGame) ShowResultMessage() {
+func (m *MockGame) ShowResultMessage() error {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "ShowResultMessage")
+	ret := m.ctrl.Call(m, "ShowResultMessage")
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // ShowResultMessage indicates an expected call of ShowResultMessage.

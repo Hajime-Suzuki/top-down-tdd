@@ -1,6 +1,7 @@
 package game
 
 import (
+	"errors"
 	"fmt"
 	"top-down-tdd/abstractions"
 	"top-down-tdd/board"
@@ -54,22 +55,33 @@ func (g *game) ShowBoard() {
 	g.presenter.Dispay(b)
 }
 
-func (g *game) ShowResultMessage() {
+func (g *game) ShowResultMessage() error {
+	if !g.board.IsOver() {
+		return errors.New("Game is not over yet")
+	}
+
 	winnerMark := g.board.GetWinner()
 
 	if winnerMark == "" {
 		g.presenter.Dispay("Draw!")
-		return
+		return nil
 	}
 
+	player := getPlayerByMark(g.players, winnerMark)
+
+	msg := fmt.Sprintf("%s won!", player.ShowName())
+	g.presenter.Dispay(msg)
+	return nil
+}
+
+func getPlayerByMark(players []abstractions.Player, mark string) abstractions.Player {
 	var player abstractions.Player
 
-	for _, p := range g.players {
-		if p.GetMark() == winnerMark {
+	for _, p := range players {
+		if p.GetMark() == mark {
 			player = p
 		}
 	}
 
-	msg := fmt.Sprintf("%s won!", player.ShowName())
-	g.presenter.Dispay(msg)
+	return player
 }

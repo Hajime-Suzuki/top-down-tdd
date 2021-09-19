@@ -188,6 +188,8 @@ var _ = Describe("Game", func() {
 			})
 
 			It("error when game is not over yet", func() {
+				// in case ShowResultMessage is called before game is over, error should be thrown
+
 				// given
 				defer mockCtrl.Finish()
 
@@ -203,8 +205,10 @@ var _ = Describe("Game", func() {
 				}
 
 				// when
-				res := subject.ShowResultMessage()
-				Expect(res).NotTo(BeNil())
+				e := subject.ShowResultMessage()
+
+				//then
+				Expect(e.Error()).To(Equal("Game is not over yet"))
 			})
 		})
 	})
