@@ -254,17 +254,11 @@ var _ = Describe("Game", func() {
 				board.EXPECT().IsOver().Return(true)
 				board.EXPECT().GetWinner().Return("o")
 
-				player1 := mocks.NewMockPlayer(mockCtrl)
-				player1.EXPECT().ShowName().Return(playerName)
-				player1.EXPECT().GetMark().Return("o")
+				winner := mocks.NewMockPlayer(mockCtrl)
+				winner.EXPECT().ShowName().Times(1).Return(playerName)
 
-				player2 := mocks.NewMockPlayer(mockCtrl)
-				player2.EXPECT().GetMark().Return("x")
-
-				players := []abstractions.Player{
-					player1,
-					player2,
-				}
+				players := mocks.NewMockPlayers(mockCtrl)
+				players.EXPECT().GetPlayerByMark("o").Return(winner)
 
 				presenter := mocks.NewMockPresenter(mockCtrl)
 				presenter.EXPECT().Dispay(message).Times(1)

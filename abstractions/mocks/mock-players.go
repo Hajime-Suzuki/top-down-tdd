@@ -48,6 +48,20 @@ func (mr *MockPlayersMockRecorder) GetCurrentPlayer() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCurrentPlayer", reflect.TypeOf((*MockPlayers)(nil).GetCurrentPlayer))
 }
 
+// GetPlayerByMark mocks base method.
+func (m *MockPlayers) GetPlayerByMark(arg0 string) abstractions.Player {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPlayerByMark", arg0)
+	ret0, _ := ret[0].(abstractions.Player)
+	return ret0
+}
+
+// GetPlayerByMark indicates an expected call of GetPlayerByMark.
+func (mr *MockPlayersMockRecorder) GetPlayerByMark(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPlayerByMark", reflect.TypeOf((*MockPlayers)(nil).GetPlayerByMark), arg0)
+}
+
 // GetPlayers mocks base method.
 func (m *MockPlayers) GetPlayers() []abstractions.Player {
 	m.ctrl.T.Helper()

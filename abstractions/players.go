@@ -7,6 +7,7 @@ type Players interface {
 	Next() Players
 	RegisterNewPlayer(name string)
 	GetPlayers() []Player
+	GetPlayerByMark(mark string) Player
 }
 
 type Player interface {

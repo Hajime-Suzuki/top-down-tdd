@@ -27,6 +27,10 @@ func (ps *Players) GetPlayers() []abstractions.Player {
 	return ps.players
 }
 
+func (ps *Players) GetPlayerByMark(mark string) abstractions.Player {
+	return Player{}
+}
+
 type Player struct {
 	name string
 }
