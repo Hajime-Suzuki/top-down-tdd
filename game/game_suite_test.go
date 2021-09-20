@@ -238,100 +238,100 @@ var _ = Describe("Game", func() {
 	Context("ShowResultMessage", func() {
 		When("there is winner", func() {
 			It("show a winner message", func() {
-				// given
-				defer mockCtrl.Finish()
+				//// given
+				//defer mockCtrl.Finish()
 
-				//********************************
-				// 1. get winner mark from board
-				// 2. get player by mark from players
-				// 3. show message like "player 1234 won!"
-				//********************************
+				////********************************
+				//// 1. get winner mark from board
+				//// 2. get player by mark from players
+				//// 3. show message like "player 1234 won!"
+				////********************************
 
-				playerName := "John Doe"
-				message := "John Doe won!"
+				//playerName := "John Doe"
+				//message := "John Doe won!"
 
-				board := mocks.NewMockBoard(mockCtrl)
-				board.EXPECT().IsOver().Return(true)
-				board.EXPECT().GetWinner().Return("o")
+				//board := mocks.NewMockBoard(mockCtrl)
+				//board.EXPECT().IsOver().Return(true)
+				//board.EXPECT().GetWinner().Return("o")
 
-				player1 := mocks.NewMockPlayer(mockCtrl)
-				player1.EXPECT().ShowName().Return(playerName)
-				player1.EXPECT().GetMark().Return("o")
+				//player1 := mocks.NewMockPlayer(mockCtrl)
+				//player1.EXPECT().ShowName().Return(playerName)
+				//player1.EXPECT().GetMark().Return("o")
 
-				player2 := mocks.NewMockPlayer(mockCtrl)
-				player2.EXPECT().GetMark().Return("x")
+				//player2 := mocks.NewMockPlayer(mockCtrl)
+				//player2.EXPECT().GetMark().Return("x")
 
-				players := []abstractions.Player{
-					player1,
-					player2,
-				}
+				//players := []abstractions.Player{
+				//	player1,
+				//	player2,
+				//}
 
-				presenter := mocks.NewMockPresenter(mockCtrl)
-				presenter.EXPECT().Dispay(message).Times(1)
+				//presenter := mocks.NewMockPresenter(mockCtrl)
+				//presenter.EXPECT().Dispay(message).Times(1)
 
-				subject := game{
-					board:     board,
-					players:   players,
-					presenter: presenter,
-				}
+				//subject := game{
+				//	board:     board,
+				//	players:   players,
+				//	presenter: presenter,
+				//}
 
-				// when
-				subject.ShowResultMessage()
+				//// when
+				//subject.ShowResultMessage()
 			})
 		})
 
 		When("there is no winner", func() {
 			It("show draw message", func() {
-				// given
-				defer mockCtrl.Finish()
+				//// given
+				//defer mockCtrl.Finish()
 
-				//********************************
-				// 1. get winner mark from board
-				// 2. if there is no winner, show message like "Draw!"
-				//********************************
+				////********************************
+				//// 1. get winner mark from board
+				//// 2. if there is no winner, show message like "Draw!"
+				////********************************
 
-				message := "Draw!"
+				//message := "Draw!"
 
-				board := mocks.NewMockBoard(mockCtrl)
-				board.EXPECT().IsOver().Return(true)
-				board.EXPECT().GetWinner().Return("")
+				//board := mocks.NewMockBoard(mockCtrl)
+				//board.EXPECT().IsOver().Return(true)
+				//board.EXPECT().GetWinner().Return("")
 
-				presenter := mocks.NewMockPresenter(mockCtrl)
-				presenter.EXPECT().Dispay(message).Times(1)
+				//presenter := mocks.NewMockPresenter(mockCtrl)
+				//presenter.EXPECT().Dispay(message).Times(1)
 
-				subject := game{
-					board:     board,
-					presenter: presenter,
-				}
+				//subject := game{
+				//	board:     board,
+				//	presenter: presenter,
+				//}
 
-				// when
-				subject.ShowResultMessage()
+				//// when
+				//subject.ShowResultMessage()
 			})
 
 		})
 
 		It("thrown error when game is not over yet", func() {
-			// in case ShowResultMessage is called before game is over, error should be thrown
+			//// in case ShowResultMessage is called before game is over, error should be thrown
 
-			// given
-			defer mockCtrl.Finish()
+			//// given
+			//defer mockCtrl.Finish()
 
-			board := mocks.NewMockBoard(mockCtrl)
-			board.EXPECT().IsOver().Return(false)
+			//board := mocks.NewMockBoard(mockCtrl)
+			//board.EXPECT().IsOver().Return(false)
 
-			presenter := mocks.NewMockPresenter(mockCtrl)
-			presenter.EXPECT().Dispay(gomock.Any()).Times(0)
+			//presenter := mocks.NewMockPresenter(mockCtrl)
+			//presenter.EXPECT().Dispay(gomock.Any()).Times(0)
 
-			subject := game{
-				board:     board,
-				presenter: presenter,
-			}
+			//subject := game{
+			//	board:     board,
+			//	presenter: presenter,
+			//}
 
-			// when
-			e := subject.ShowResultMessage()
+			//// when
+			//e := subject.ShowResultMessage()
 
-			//then
-			Expect(e.Error()).To(Equal("Game is not over yet"))
+			////then
+			//Expect(e.Error()).To(Equal("Game is not over yet"))
 		})
 
 	})

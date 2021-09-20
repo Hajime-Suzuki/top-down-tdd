@@ -3,26 +3,28 @@ package players
 import "top-down-tdd/abstractions"
 
 type Players struct {
+	players []abstractions.Player
 }
 
 func NewPlayers() abstractions.Players {
-	return Players{}
+	return &Players{}
 }
 
-func (ps Players) GetCurrentPlayer() abstractions.Player {
+func (ps *Players) GetCurrentPlayer() abstractions.Player {
 	return Player{}
 }
 
-func (ps Players) Next() abstractions.Players {
-	return Players{}
+func (ps *Players) Next() abstractions.Players {
+	return &Players{}
 }
 
-func (ps Players) RegisterNewPlayer(name string) {
-	panic("TODO IMPLEMENT")
+func (ps *Players) RegisterNewPlayer(name string) {
+	ps.players = append(ps.players, NewPlayer(name))
 }
 
-func (ps Players) GetPlayers() []abstractions.Player {
-	panic("TODO IMPLEMENT")
+// used for testing
+func (ps *Players) GetPlayers() []abstractions.Player {
+	return ps.players
 }
 
 type Player struct {

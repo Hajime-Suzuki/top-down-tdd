@@ -22,15 +22,14 @@ func NewGame(inputHandler abstractions.InputHandler) abstractions.Game {
 
 func (g *game) InitGame() {
 	g.board = board.NewBoard()
+	g.players = players.NewPlayers()
 
 	userName1 := g.inputHandler.GetUserInput("Player1: What's your name?")
 
 	userName2 := g.inputHandler.GetUserInput("Player2: What's your name?")
 
-	g.players = []abstractions.Player{
-		players.NewPlayer(userName1),
-		players.NewPlayer(userName2),
-	}
+	g.players.RegisterNewPlayer(userName1)
+	g.players.RegisterNewPlayer(userName2)
 }
 
 func (g *game) SetMark() {
