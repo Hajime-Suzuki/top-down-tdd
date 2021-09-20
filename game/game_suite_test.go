@@ -60,7 +60,7 @@ var _ = Describe("Game", func() {
 			ps := []abstractions.Player{p1, p2}
 
 			Expect(subject.board).To(Equal(b))
-			Expect(subject.players).To(Equal(ps))
+			Expect(subject.players.GetPlayers()).To(Equal(ps))
 		})
 	})
 

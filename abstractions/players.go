@@ -6,6 +6,7 @@ type Players interface {
 	GetCurrentPlayer() Player
 	Next() Players
 	RegisterNewPlayer(name string)
+	GetPlayers() []Player
 }
 
 type Player interface {
