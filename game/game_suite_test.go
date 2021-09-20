@@ -1,8 +1,6 @@
 package game
 
 import (
-	"errors"
-	"fmt"
 	"testing"
 	"top-down-tdd/abstractions"
 	"top-down-tdd/abstractions/mocks"
@@ -65,118 +63,118 @@ var _ = Describe("Game", func() {
 	})
 
 	Context("SetMark", func() {
-		It("set mark if user input is valid", func() {
-			//TODO: make players struct
-			//******
-			// get current player and its mark
-			// ask player input
-			// update board with mark and player input
-			// update players' turn
-			//******
+		//It("set mark if user input is valid", func() {
+		//	//TODO: make players struct
+		//	//******
+		//	// get current player and its mark
+		//	// ask player input
+		//	// update board with mark and player input
+		//	// update players' turn
+		//	//******
 
-			// given
-			defer mockCtrl.Finish()
+		//	// given
+		//	defer mockCtrl.Finish()
 
-			currentPlayer := mocks.NewMockPlayer(mockCtrl)
-			currentPlayer.EXPECT().GetMark().Return("o")
-			currentPlayer.EXPECT().ShowName().MinTimes(1).Return("John Doe")
+		//	currentPlayer := mocks.NewMockPlayer(mockCtrl)
+		//	currentPlayer.EXPECT().GetMark().Return("o")
+		//	currentPlayer.EXPECT().ShowName().MinTimes(1).Return("John Doe")
 
-			nextPlayer := mocks.NewMockPlayer(newCtrl())
+		//	nextPlayer := mocks.NewMockPlayer(newCtrl())
 
-			players := []abstractions.Player{
-				currentPlayer,
-				nextPlayer,
-			}
+		//	players := []abstractions.Player{
+		//		currentPlayer,
+		//		nextPlayer,
+		//	}
 
-			message := `
-	John Doe, select position:
-	1 2 3
-	o 4 o
-	x 5 x
-	`
+		//	message := `
+		//John Doe, select position:
+		//1 2 3
+		//o 4 o
+		//x 5 x
+		//`
 
-			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			inputHandler.EXPECT().GetUserInput(message).Times(1).Return("3")
+		//	inputHandler := mocks.NewMockInputHandler(mockCtrl)
+		//	inputHandler.EXPECT().GetUserInput(message).Times(1).Return("3")
 
-			board := mocks.NewMockBoard(mockCtrl)
-			//TODO: find a better way to achieve this
-			board.EXPECT().Show().Return(
-				`1 2 3
-	o 4 o
-	x 5 x`,
-			)
+		//	board := mocks.NewMockBoard(mockCtrl)
+		//	//TODO: find a better way to achieve this
+		//	board.EXPECT().Show().Return(
+		//		`1 2 3
+		//o 4 o
+		//x 5 x`,
+		//	)
 
-			updatedBoard := mocks.NewMockBoard(newCtrl())
+		//	updatedBoard := mocks.NewMockBoard(newCtrl())
 
-			board.EXPECT().Update("o", "3").Times(1).Return(updatedBoard, nil)
+		//	board.EXPECT().Update("o", "3").Times(1).Return(updatedBoard, nil)
 
-			subject := game{
-				inputHandler: inputHandler,
-				players:      players,
-				board:        board,
-			}
+		//	subject := game{
+		//		inputHandler: inputHandler,
+		//		players:      players,
+		//		board:        board,
+		//	}
 
-			// when
-			subject.SetMark()
+		//	// when
+		//	subject.SetMark()
 
-			//then
-			updatedPlayers := []abstractions.Player{
-				nextPlayer,
-				currentPlayer,
-			}
+		//	//then
+		//	updatedPlayers := []abstractions.Player{
+		//		nextPlayer,
+		//		currentPlayer,
+		//	}
 
-			Expect(subject.players).To(Equal(updatedPlayers))
-			Expect(subject.board).To(Equal(updatedBoard))
-		})
+		//	Expect(subject.players).To(Equal(updatedPlayers))
+		//	Expect(subject.board).To(Equal(updatedBoard))
+		//})
 
-		It("retry getting user input if invalid", func() {
-			// given
-			defer mockCtrl.Finish()
+		//It("retry getting user input if invalid", func() {
+		//	// given
+		//	defer mockCtrl.Finish()
 
-			currentPlayer := mocks.NewMockPlayer(mockCtrl)
-			currentPlayer.EXPECT().GetMark().AnyTimes().Return("o")
-			currentPlayer.EXPECT().ShowName().AnyTimes().Return("John Doe")
+		//	currentPlayer := mocks.NewMockPlayer(mockCtrl)
+		//	currentPlayer.EXPECT().GetMark().AnyTimes().Return("o")
+		//	currentPlayer.EXPECT().ShowName().AnyTimes().Return("John Doe")
 
-			nextPlayer := mocks.NewMockPlayer(newCtrl())
+		//	nextPlayer := mocks.NewMockPlayer(newCtrl())
 
-			players := []abstractions.Player{
-				currentPlayer,
-				nextPlayer,
-			}
+		//	players := []abstractions.Player{
+		//		currentPlayer,
+		//		nextPlayer,
+		//	}
 
-			errorMessage := "invalid input"
+		//	errorMessage := "invalid input"
 
-			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			inputHandler.EXPECT().GetUserInput(gomock.Any()).Return("3")
+		//	inputHandler := mocks.NewMockInputHandler(mockCtrl)
+		//	inputHandler.EXPECT().GetUserInput(gomock.Any()).Return("3")
 
-			// when there is error in update, it will retry
-			inputHandler.EXPECT().GetUserInput(fmt.Sprintf("%s. Try again:", errorMessage)).Return("5")
+		//	// when there is error in update, it will retry
+		//	inputHandler.EXPECT().GetUserInput(fmt.Sprintf("%s. Try again:", errorMessage)).Return("5")
 
-			board := mocks.NewMockBoard(mockCtrl)
-			board.EXPECT().Show().Return(
-				`1 2 3
-				o 4 o
-				x 5 x`,
-			)
+		//	board := mocks.NewMockBoard(mockCtrl)
+		//	board.EXPECT().Show().Return(
+		//		`1 2 3
+		//		o 4 o
+		//		x 5 x`,
+		//	)
 
-			// throws error first time
-			board.EXPECT().Update(gomock.Any(), gomock.Any()).Return(nil, errors.New(errorMessage))
+		//	// throws error first time
+		//	board.EXPECT().Update(gomock.Any(), gomock.Any()).Return(nil, errors.New(errorMessage))
 
-			updatedBoard := mocks.NewMockBoard(newCtrl())
-			board.EXPECT().Update("o", "5").Return(updatedBoard, nil)
+		//	updatedBoard := mocks.NewMockBoard(newCtrl())
+		//	board.EXPECT().Update("o", "5").Return(updatedBoard, nil)
 
-			subject := game{
-				inputHandler: inputHandler,
-				players:      players,
-				board:        board,
-			}
+		//	subject := game{
+		//		inputHandler: inputHandler,
+		//		players:      players,
+		//		board:        board,
+		//	}
 
-			// when
-			subject.SetMark()
+		//	// when
+		//	subject.SetMark()
 
-			//then
-			Expect(subject.board).To(Equal(updatedBoard))
-		})
+		//	//then
+		//	Expect(subject.board).To(Equal(updatedBoard))
+		//})
 	})
 
 	Context("IsOver", func() {

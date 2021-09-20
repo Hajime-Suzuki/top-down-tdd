@@ -1,8 +1,6 @@
 package game
 
 import (
-	"errors"
-	"fmt"
 	"top-down-tdd/abstractions"
 	"top-down-tdd/board"
 	"top-down-tdd/players"
@@ -10,7 +8,7 @@ import (
 
 type game struct {
 	board   abstractions.Board
-	players []abstractions.Player
+	players abstractions.Players
 
 	inputHandler abstractions.InputHandler
 	presenter    abstractions.Presenter
@@ -36,28 +34,29 @@ func (g *game) InitGame() {
 }
 
 func (g *game) SetMark() {
-	p := g.players[0]
+	panic("fix test")
+	// p := g.players[0]
 
-	input := g.inputHandler.GetUserInput(fmt.Sprintf(`
-	%s, select position:
-	%s
-	`, p.ShowName(), g.board.Show()))
+	// input := g.inputHandler.GetUserInput(fmt.Sprintf(`
+	// %s, select position:
+	// %s
+	// `, p.ShowName(), g.board.Show()))
 
-	mark := p.GetMark()
-	updated, err := g.board.Update(mark, input)
+	// mark := p.GetMark()
+	// updated, err := g.board.Update(mark, input)
 
-	for err != nil {
-		// when:
-		// input is not number
-		// input is not within available spot
-		input := g.inputHandler.GetUserInput(fmt.Sprintf("%s. Try again:", err.Error()))
+	// for err != nil {
+	// 	// when:
+	// 	// input is not number
+	// 	// input is not within available spot
+	// 	input := g.inputHandler.GetUserInput(fmt.Sprintf("%s. Try again:", err.Error()))
 
-		updated, err = g.board.Update(mark, input)
-	}
+	// 	updated, err = g.board.Update(mark, input)
+	// }
 
-	g.board = updated
-	//TODO: order players programatically in case there are more than 2 players
-	g.players = []abstractions.Player{g.players[1], g.players[0]}
+	// g.board = updated
+	// //TODO: order players programatically in case there are more than 2 players
+	// g.players = []abstractions.Player{g.players[1], g.players[0]}
 }
 
 func (g *game) IsOver() bool {
@@ -70,22 +69,23 @@ func (g *game) ShowBoard() {
 }
 
 func (g *game) ShowResultMessage() error {
-	if !g.board.IsOver() {
-		return errors.New("Game is not over yet")
-	}
+	panic("fix test")
+	// if !g.board.IsOver() {
+	// 	return errors.New("Game is not over yet")
+	// }
 
-	winnerMark := g.board.GetWinner()
+	// winnerMark := g.board.GetWinner()
 
-	if winnerMark == "" {
-		g.presenter.Dispay("Draw!")
-		return nil
-	}
+	// if winnerMark == "" {
+	// 	g.presenter.Dispay("Draw!")
+	// 	return nil
+	// }
 
-	player := getPlayerByMark(g.players, winnerMark)
+	// player := getPlayerByMark(g.players, winnerMark)
 
-	msg := fmt.Sprintf("%s won!", player.ShowName())
-	g.presenter.Dispay(msg)
-	return nil
+	// msg := fmt.Sprintf("%s won!", player.ShowName())
+	// g.presenter.Dispay(msg)
+	// return nil
 }
 
 func getPlayerByMark(players []abstractions.Player, mark string) abstractions.Player {
