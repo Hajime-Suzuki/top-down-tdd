@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"top-down-tdd/abstractions"
 	"top-down-tdd/board"
-	"top-down-tdd/player"
+	"top-down-tdd/players"
 )
 
 type game struct {
@@ -30,8 +30,8 @@ func (g *game) InitGame() {
 	userName2 := g.inputHandler.GetUserInput("Player2: What's your name?")
 
 	g.players = []abstractions.Player{
-		player.NewPlayer(userName1),
-		player.NewPlayer(userName2),
+		players.NewPlayer(userName1),
+		players.NewPlayer(userName2),
 	}
 }
 

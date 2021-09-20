@@ -7,7 +7,7 @@ import (
 	"top-down-tdd/abstractions"
 	"top-down-tdd/abstractions/mocks"
 	"top-down-tdd/board"
-	"top-down-tdd/player"
+	"top-down-tdd/players"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -55,8 +55,8 @@ var _ = Describe("Game", func() {
 
 			// then
 			b := board.NewBoard()
-			p1 := player.NewPlayer("name 1")
-			p2 := player.NewPlayer("name 2")
+			p1 := players.NewPlayer("name 1")
+			p2 := players.NewPlayer("name 2")
 			ps := []abstractions.Player{p1, p2}
 
 			Expect(subject.board).To(Equal(b))
