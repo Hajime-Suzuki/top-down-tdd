@@ -276,56 +276,56 @@ var _ = Describe("Game", func() {
 
 		When("there is no winner", func() {
 			It("show draw message", func() {
-				//// given
-				//defer mockCtrl.Finish()
+				// given
+				defer mockCtrl.Finish()
 
-				////********************************
-				//// 1. get winner mark from board
-				//// 2. if there is no winner, show message like "Draw!"
-				////********************************
+				//********************************
+				// 1. get winner mark from board
+				// 2. if there is no winner, show message like "Draw!"
+				//********************************
 
-				//message := "Draw!"
+				message := "Draw!"
 
-				//board := mocks.NewMockBoard(mockCtrl)
-				//board.EXPECT().IsOver().Return(true)
-				//board.EXPECT().GetWinner().Return("")
+				board := mocks.NewMockBoard(mockCtrl)
+				board.EXPECT().IsOver().Return(true)
+				board.EXPECT().GetWinner().Return("")
 
-				//presenter := mocks.NewMockPresenter(mockCtrl)
-				//presenter.EXPECT().Dispay(message).Times(1)
+				presenter := mocks.NewMockPresenter(mockCtrl)
+				presenter.EXPECT().Dispay(message).Times(1)
 
-				//subject := game{
-				//	board:     board,
-				//	presenter: presenter,
-				//}
+				subject := game{
+					board:     board,
+					presenter: presenter,
+				}
 
-				//// when
-				//subject.ShowResultMessage()
+				// when
+				subject.ShowResultMessage()
 			})
 
 		})
 
 		It("thrown error when game is not over yet", func() {
-			//// in case ShowResultMessage is called before game is over, error should be thrown
+			// in case ShowResultMessage is called before game is over, error should be thrown
 
-			//// given
-			//defer mockCtrl.Finish()
+			// given
+			defer mockCtrl.Finish()
 
-			//board := mocks.NewMockBoard(mockCtrl)
-			//board.EXPECT().IsOver().Return(false)
+			board := mocks.NewMockBoard(mockCtrl)
+			board.EXPECT().IsOver().Return(false)
 
-			//presenter := mocks.NewMockPresenter(mockCtrl)
-			//presenter.EXPECT().Dispay(gomock.Any()).Times(0)
+			presenter := mocks.NewMockPresenter(mockCtrl)
+			presenter.EXPECT().Dispay(gomock.Any()).Times(0)
 
-			//subject := game{
-			//	board:     board,
-			//	presenter: presenter,
-			//}
+			subject := game{
+				board:     board,
+				presenter: presenter,
+			}
 
-			//// when
-			//e := subject.ShowResultMessage()
+			// when
+			e := subject.ShowResultMessage()
 
-			////then
-			//Expect(e.Error()).To(Equal("Game is not over yet"))
+			//then
+			Expect(e.Error()).To(Equal("Game is not over yet"))
 		})
 
 	})
