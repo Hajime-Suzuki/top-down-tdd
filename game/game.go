@@ -35,29 +35,26 @@ func (g *game) InitGame() {
 }
 
 func (g *game) SetMark() {
-	panic("fix test")
-	// p := g.players[0]
+	p := g.players.GetCurrentPlayer()
 
-	// input := g.inputHandler.GetUserInput(fmt.Sprintf(`
-	// %s, select position:
-	// %s
-	// `, p.ShowName(), g.board.Show()))
+	input := g.inputHandler.GetUserInput(fmt.Sprintf(`
+	%s, select position:
+	%s`, p.ShowName(), g.board.Show()))
 
-	// mark := p.GetMark()
-	// updated, err := g.board.Update(mark, input)
+	mark := p.GetMark()
+	updated, err := g.board.Update(mark, input)
 
-	// for err != nil {
-	// 	// when:
-	// 	// input is not number
-	// 	// input is not within available spot
-	// 	input := g.inputHandler.GetUserInput(fmt.Sprintf("%s. Try again:", err.Error()))
+	for err != nil {
+		// when:
+		// input is not number
+		// input is not within available spot
+		input := g.inputHandler.GetUserInput(fmt.Sprintf("%s. Try again:", err.Error()))
 
-	// 	updated, err = g.board.Update(mark, input)
-	// }
+		updated, err = g.board.Update(mark, input)
+	}
 
-	// g.board = updated
-	// //TODO: order players programatically in case there are more than 2 players
-	// g.players = []abstractions.Player{g.players[1], g.players[0]}
+	g.players = g.players.Next()
+	g.board = updated
 }
 
 func (g *game) IsOver() bool {
