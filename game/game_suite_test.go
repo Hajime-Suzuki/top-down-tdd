@@ -134,8 +134,8 @@ var _ = Describe("Game", func() {
 			defer mockCtrl.Finish()
 
 			currentPlayer := mocks.NewMockPlayer(mockCtrl)
-			currentPlayer.EXPECT().GetMark().Return("o")
-			currentPlayer.EXPECT().ShowName().Return("John Doe")
+			currentPlayer.EXPECT().GetMark().AnyTimes().Return("o")
+			currentPlayer.EXPECT().ShowName().AnyTimes().Return("John Doe")
 
 			nextPlayer := mocks.NewMockPlayer(newCtrl())
 
@@ -148,6 +148,8 @@ var _ = Describe("Game", func() {
 
 			inputHandler := mocks.NewMockInputHandler(mockCtrl)
 			inputHandler.EXPECT().GetUserInput(gomock.Any()).Return("3")
+
+			// when there is error in update, it will retry
 			inputHandler.EXPECT().GetUserInput(fmt.Sprintf("%s. Try again:", errorMessage)).Return("5")
 
 			board := mocks.NewMockBoard(mockCtrl)
@@ -157,9 +159,11 @@ var _ = Describe("Game", func() {
 				x 5 x`,
 			)
 
-			board.EXPECT().Update("o", "3").Return(mocks.NewMockBoard(mockCtrl), errors.New(errorMessage))
+			// throws error first time
+			board.EXPECT().Update(gomock.Any(), gomock.Any()).Return(nil, errors.New(errorMessage))
 
-			board.EXPECT().Update("o", "5").Return(mocks.NewMockBoard(mockCtrl), nil)
+			updatedBoard := mocks.NewMockBoard(newCtrl())
+			board.EXPECT().Update("o", "5").Return(updatedBoard, nil)
 
 			subject := game{
 				inputHandler: inputHandler,
@@ -170,6 +174,8 @@ var _ = Describe("Game", func() {
 			// when
 			subject.SetMark()
 
+			//then
+			Expect(subject.board).To(Equal(updatedBoard))
 		})
 	})
 

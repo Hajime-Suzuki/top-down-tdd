@@ -43,13 +43,16 @@ func (g *game) SetMark() {
 	%s
 	`, p.ShowName(), g.board.Show()))
 
-	updated, err := g.board.Update(p.GetMark(), input)
+	mark := p.GetMark()
+	updated, err := g.board.Update(mark, input)
 
-	if err != nil {
+	for err != nil {
 		// when:
 		// input is not number
 		// input is not within available spot
-		panic("TODO: handle.")
+		input := g.inputHandler.GetUserInput(fmt.Sprintf("%s. Try again:", err.Error()))
+
+		updated, err = g.board.Update(mark, input)
 	}
 
 	g.board = updated
