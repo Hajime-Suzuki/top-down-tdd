@@ -5,12 +5,13 @@ import (
 	"top-down-tdd/utils/terminal"
 )
 
+// TODO: use terminal as presenter
 type TerminalPresenter struct {
 	terminal terminal.TerminalUtil
 }
 
-func NewPresenter() abstractions.Presenter {
-	return TerminalPresenter{}
+func NewPresenter(t terminal.TerminalUtil) abstractions.Presenter {
+	return TerminalPresenter{t}
 }
 
 func (p TerminalPresenter) Display(msg string) {
