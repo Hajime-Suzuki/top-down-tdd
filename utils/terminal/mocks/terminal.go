@@ -33,16 +33,16 @@ func (m *MockTerminalUtil) EXPECT() *MockTerminalUtilMockRecorder {
 	return m.recorder
 }
 
-// Dispay mocks base method.
-func (m *MockTerminalUtil) Dispay(arg0 string) {
+// Display mocks base method.
+func (m *MockTerminalUtil) Display(arg0 string) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Dispay", arg0)
+	m.ctrl.Call(m, "Display", arg0)
 }
 
-// Dispay indicates an expected call of Dispay.
-func (mr *MockTerminalUtilMockRecorder) Dispay(arg0 interface{}) *gomock.Call {
+// Display indicates an expected call of Display.
+func (mr *MockTerminalUtilMockRecorder) Display(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Dispay", reflect.TypeOf((*MockTerminalUtil)(nil).Dispay), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Display", reflect.TypeOf((*MockTerminalUtil)(nil).Display), arg0)
 }
 
 // GetInput mocks base method.

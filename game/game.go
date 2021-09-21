@@ -63,7 +63,7 @@ func (g *game) IsOver() bool {
 
 func (g *game) ShowBoard() {
 	b := g.board.Show()
-	g.presenter.Dispay(b)
+	g.presenter.Display(b)
 }
 
 func (g *game) ShowResultMessage() error {
@@ -74,14 +74,14 @@ func (g *game) ShowResultMessage() error {
 	winnerMark := g.board.GetWinner()
 
 	if winnerMark == "" {
-		g.presenter.Dispay("Draw!")
+		g.presenter.Display("Draw!")
 		return nil
 	}
 
 	player := g.players.GetPlayerByMark(winnerMark)
 
 	msg := fmt.Sprintf("%s won!", player.ShowName())
-	g.presenter.Dispay(msg)
+	g.presenter.Display(msg)
 	return nil
 }
 

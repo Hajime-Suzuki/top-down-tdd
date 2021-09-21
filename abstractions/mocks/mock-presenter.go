@@ -6,7 +6,6 @@ package mocks
 
 import (
 	reflect "reflect"
-	abstractions "top-down-tdd/abstractions"
 
 	gomock "github.com/golang/mock/gomock"
 )
@@ -34,28 +33,14 @@ func (m *MockPresenter) EXPECT() *MockPresenterMockRecorder {
 	return m.recorder
 }
 
-// Dispay mocks base method.
-func (m *MockPresenter) Dispay(arg0 string) {
+// Display mocks base method.
+func (m *MockPresenter) Display(arg0 string) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Dispay", arg0)
+	m.ctrl.Call(m, "Display", arg0)
 }
 
-// Dispay indicates an expected call of Dispay.
-func (mr *MockPresenterMockRecorder) Dispay(arg0 interface{}) *gomock.Call {
+// Display indicates an expected call of Display.
+func (mr *MockPresenterMockRecorder) Display(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Dispay", reflect.TypeOf((*MockPresenter)(nil).Dispay), arg0)
-}
-
-// ShowMessage mocks base method.
-func (m *MockPresenter) ShowMessage(arg0 abstractions.Player) string {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ShowMessage", arg0)
-	ret0, _ := ret[0].(string)
-	return ret0
-}
-
-// ShowMessage indicates an expected call of ShowMessage.
-func (mr *MockPresenterMockRecorder) ShowMessage(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ShowMessage", reflect.TypeOf((*MockPresenter)(nil).ShowMessage), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Display", reflect.TypeOf((*MockPresenter)(nil).Display), arg0)
 }

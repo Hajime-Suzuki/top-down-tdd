@@ -15,7 +15,7 @@ func NewUserInput(t terminal.TerminalUtil) abstractions.InputHandler {
 }
 
 func (u UserInputHandler) GetUserInput(message string) string {
-	u.presenter.Dispay(message)
+	u.presenter.Display(message)
 	var input string
 	u.terminal.GetInput(&input)
 

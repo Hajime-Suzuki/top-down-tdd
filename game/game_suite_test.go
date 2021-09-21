@@ -216,7 +216,7 @@ var _ = Describe("Game", func() {
 			board.EXPECT().Show().Return(boardStr)
 
 			presenter := mocks.NewMockPresenter(mockCtrl)
-			presenter.EXPECT().Dispay(boardStr).Times(1)
+			presenter.EXPECT().Display(boardStr).Times(1)
 
 			subject := game{board: board, presenter: presenter}
 
@@ -251,7 +251,7 @@ var _ = Describe("Game", func() {
 				players.EXPECT().GetPlayerByMark("o").Return(winner)
 
 				presenter := mocks.NewMockPresenter(mockCtrl)
-				presenter.EXPECT().Dispay(message).Times(1)
+				presenter.EXPECT().Display(message).Times(1)
 
 				subject := game{
 					board:     board,
@@ -281,7 +281,7 @@ var _ = Describe("Game", func() {
 				board.EXPECT().GetWinner().Return("")
 
 				presenter := mocks.NewMockPresenter(mockCtrl)
-				presenter.EXPECT().Dispay(message).Times(1)
+				presenter.EXPECT().Display(message).Times(1)
 
 				subject := game{
 					board:     board,
@@ -304,7 +304,7 @@ var _ = Describe("Game", func() {
 			board.EXPECT().IsOver().Return(false)
 
 			presenter := mocks.NewMockPresenter(mockCtrl)
-			presenter.EXPECT().Dispay(gomock.Any()).Times(0)
+			presenter.EXPECT().Display(gomock.Any()).Times(0)
 
 			subject := game{
 				board:     board,

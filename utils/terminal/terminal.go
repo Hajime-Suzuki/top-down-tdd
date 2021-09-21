@@ -6,7 +6,7 @@ import "fmt"
 
 type TerminalUtil interface {
 	GetInput(*string)
-	Dispay(string)
+	Display(string)
 }
 
 type terminalUtil struct {
@@ -18,7 +18,7 @@ func (t terminalUtil) GetInput(a *string) {
 	}
 }
 
-func (t terminalUtil) Dispay(a string) {
+func (t terminalUtil) Display(a string) {
 	if _, err := fmt.Println(a); err != nil {
 		panic(err)
 	}

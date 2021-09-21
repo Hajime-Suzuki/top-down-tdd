@@ -36,13 +36,13 @@ var _ = Describe("UserInput", func() {
 			value := "message"
 			terminal := terminal.NewMockTerminalUtil(mockCtrl)
 			terminal.EXPECT().GetInput(&s).SetArg(0, value)
-			terminal.EXPECT().Dispay("select position").Return()
+			terminal.EXPECT().Display("select position").Return()
 
 			//when
-			userInput := userinput.NewUserInput(terminal)
+			subject := userinput.NewUserInput(terminal)
 
 			//then
-			res := userInput.GetUserInput("select position")
+			res := subject.GetUserInput("select position")
 			Expect(res).To(Equal("message"))
 
 		})
