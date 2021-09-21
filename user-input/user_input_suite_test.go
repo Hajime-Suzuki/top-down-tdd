@@ -2,9 +2,8 @@ package userinput_test
 
 import (
 	"testing"
-	"top-down-tdd/abstractions/mocks"
 	userinput "top-down-tdd/user-input"
-	uMock "top-down-tdd/user-input/mocks"
+	terminal "top-down-tdd/utils/terminal/mocks"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -35,14 +34,12 @@ var _ = Describe("UserInput", func() {
 			//given
 			var s string
 			value := "message"
-			terminal := uMock.NewMockTerminalUtil(mockCtrl)
+			terminal := terminal.NewMockTerminalUtil(mockCtrl)
 			terminal.EXPECT().GetInput(&s).SetArg(0, value)
-
-			presenter := mocks.NewMockPresenter(mockCtrl)
-			presenter.EXPECT().Dispay("select position").Return()
+			terminal.EXPECT().Dispay("select position").Return()
 
 			//when
-			userInput := userinput.NewUserInput(terminal, presenter)
+			userInput := userinput.NewUserInput(terminal)
 
 			//then
 			res := userInput.GetUserInput("select position")
