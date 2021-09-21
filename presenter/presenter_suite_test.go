@@ -2,8 +2,8 @@ package presenter_test
 
 import (
 	"testing"
-	"top-down-tdd/abstractions/mocks"
-	userinput "top-down-tdd/user-input"
+	"top-down-tdd/presenter"
+	terminalMock "top-down-tdd/utils/terminal/mocks"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -33,11 +33,11 @@ var _ = Describe("Presenter", func() {
 			defer mockCtrl.Finish()
 			//given
 
-			outputWriter := mocks.NewMockOutputWriter(mockCtrl)
-			outputWriter.EXPECT().Output("test message").Return()
+			t := terminalMock.NewMockTerminalUtil(mockCtrl)
+			t.EXPECT().Display("test message").Return()
 
 			//when
-			subject := userinput.NewPresenter(outputWriter)
+			subject := presenter.NewPresenter(t)
 
 			//then
 			subject.Display("test message")
