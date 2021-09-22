@@ -1,23 +1,21 @@
 package userinput
 
 import (
+	"fmt"
 	"top-down-tdd/abstractions"
-	"top-down-tdd/utils/terminal"
 )
 
-type UserInputHandler struct {
-	terminal  terminal.TerminalUtil
-	presenter abstractions.Presenter
+type TerminalUserInputHandler struct {
 }
 
-func NewUserInput(t terminal.TerminalUtil) abstractions.InputHandler {
-	return UserInputHandler{t, t}
+func NewUserInput() abstractions.InputHandler {
+	return TerminalUserInputHandler{}
 }
 
-func (u UserInputHandler) GetUserInput(message string) string {
-	u.presenter.Display(message)
+func (u TerminalUserInputHandler) GetUserInput() string {
 	var input string
-	u.terminal.GetInput(&input)
-
+	if _, err := fmt.Scanln(input); err != nil {
+		panic(err)
+	}
 	return input
 }

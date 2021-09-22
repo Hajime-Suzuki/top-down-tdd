@@ -1,19 +1,19 @@
 package presenter
 
 import (
+	"fmt"
 	"top-down-tdd/abstractions"
-	"top-down-tdd/utils/terminal"
 )
 
-// TODO: use terminal as presenter
 type TerminalPresenter struct {
-	terminal terminal.TerminalUtil
 }
 
-func NewPresenter(t terminal.TerminalUtil) abstractions.Presenter {
-	return TerminalPresenter{t}
+func NewPresenter() abstractions.Presenter {
+	return TerminalPresenter{}
 }
 
-func (p TerminalPresenter) Display(msg string) {
-	p.terminal.Display(msg)
+func (p TerminalPresenter) Display(message string) {
+	if _, err := fmt.Println(message); err != nil {
+		panic(err)
+	}
 }
