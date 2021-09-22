@@ -44,11 +44,15 @@ var _ = Describe("Game", func() {
 			// given
 			defer mockCtrl.Finish()
 
-			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			inputHandler.EXPECT().GetUserInput("Player1: What's your name?").Return("name 1")
-			inputHandler.EXPECT().GetUserInput("Player2: What's your name?").Return("name 2")
+			presenter := mocks.NewMockPresenter(mockCtrl)
+			presenter.EXPECT().Display("Player1: What's your name?")
+			presenter.EXPECT().Display("Player2: What's your name?")
 
-			subject := game{inputHandler: inputHandler}
+			inputHandler := mocks.NewMockInputHandler(mockCtrl)
+			inputHandler.EXPECT().GetUserInput().Return("name 1")
+			inputHandler.EXPECT().GetUserInput().Return("name 2")
+
+			subject := game{inputHandler: inputHandler, presenter: presenter}
 
 			// when
 			subject.InitGame()
@@ -66,7 +70,6 @@ var _ = Describe("Game", func() {
 
 	Context("SetMark", func() {
 		It("set mark if user input is valid", func() {
-			//TODO: make players struct
 			//******
 			// get current player and its mark
 			// ask player input (show current board as well)
@@ -77,6 +80,11 @@ var _ = Describe("Game", func() {
 			// given
 			defer mockCtrl.Finish()
 
+			presenter := mocks.NewMockPresenter(mockCtrl)
+			// show board and display "select position" message
+			// TODO: fix message matcher
+			presenter.EXPECT().Display(gomock.Any())
+
 			currentPlayer := mocks.NewMockPlayer(mockCtrl)
 			currentPlayer.EXPECT().GetMark().Return("o")
 			currentPlayer.EXPECT().ShowName().Return("John Doe")
@@ -84,11 +92,8 @@ var _ = Describe("Game", func() {
 			players := mocks.NewMockPlayers(mockCtrl)
 			players.EXPECT().GetCurrentPlayer().Return(currentPlayer)
 
-			// message := gomega.ContainSubstring("John Doe")
-
 			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			//TODO: fix message and use it here
-			inputHandler.EXPECT().GetUserInput(gomock.Any()).Return("3")
+			inputHandler.EXPECT().GetUserInput().Return("3")
 
 			board := mocks.NewMockBoard(mockCtrl)
 			//TODO: find a better way to achieve this
@@ -108,6 +113,7 @@ var _ = Describe("Game", func() {
 				inputHandler: inputHandler,
 				players:      players,
 				board:        board,
+				presenter:    presenter,
 			}
 
 			// when
@@ -121,6 +127,12 @@ var _ = Describe("Game", func() {
 		It("retry getting user input if invalid", func() {
 			// given
 			defer mockCtrl.Finish()
+			errorMessage := "invalid input"
+
+			presenter := mocks.NewMockPresenter(mockCtrl)
+			// TODO: fix message matcher
+			presenter.EXPECT().Display(gomock.Any())
+			presenter.EXPECT().Display(fmt.Sprintf("%s. Try again:", errorMessage))
 
 			currentPlayer := mocks.NewMockPlayer(mockCtrl)
 			currentPlayer.EXPECT().GetMark().AnyTimes().Return("o")
@@ -129,13 +141,11 @@ var _ = Describe("Game", func() {
 			players := mocks.NewMockPlayers(mockCtrl)
 			players.EXPECT().GetCurrentPlayer().AnyTimes().Return(currentPlayer)
 
-			errorMessage := "invalid input"
-
 			inputHandler := mocks.NewMockInputHandler(mockCtrl)
-			inputHandler.EXPECT().GetUserInput(gomock.Any()).Return("3")
+			inputHandler.EXPECT().GetUserInput().Return("3")
 
 			// when there is error in update, it will retry
-			inputHandler.EXPECT().GetUserInput(fmt.Sprintf("%s. Try again:", errorMessage)).Return("5")
+			inputHandler.EXPECT().GetUserInput().Return("5")
 
 			board := mocks.NewMockBoard(mockCtrl)
 			board.EXPECT().Show().Return(
@@ -157,6 +167,7 @@ var _ = Describe("Game", func() {
 				inputHandler: inputHandler,
 				players:      players,
 				board:        board,
+				presenter:    presenter,
 			}
 
 			// when
