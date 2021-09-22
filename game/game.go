@@ -26,9 +26,11 @@ func (g *game) InitGame() {
 	g.board = board.NewBoard()
 	g.players = players.NewPlayers()
 
-	userName1 := g.inputHandler.GetUserInput("Player1: What's your name?")
+	g.presenter.Display("Player1: What's your name?")
+	userName1 := g.inputHandler.GetUserInput()
 
-	userName2 := g.inputHandler.GetUserInput("Player2: What's your name?")
+	g.presenter.Display("Player2: What's your name?")
+	userName2 := g.inputHandler.GetUserInput()
 
 	g.players.RegisterNewPlayer(userName1)
 	g.players.RegisterNewPlayer(userName2)
@@ -37,9 +39,10 @@ func (g *game) InitGame() {
 func (g *game) SetMark() {
 	p := g.players.GetCurrentPlayer()
 
-	input := g.inputHandler.GetUserInput(fmt.Sprintf(`
+	g.presenter.Display(fmt.Sprintf(`
 	%s, select position:
 	%s`, p.ShowName(), g.board.Show()))
+	input := g.inputHandler.GetUserInput()
 
 	mark := p.GetMark()
 	updated, err := g.board.Update(mark, input)
@@ -48,7 +51,8 @@ func (g *game) SetMark() {
 		// when:
 		// input is not number
 		// input is not within available spot
-		input := g.inputHandler.GetUserInput(fmt.Sprintf("%s. Try again:", err.Error()))
+		g.presenter.Display(fmt.Sprintf("%s. Try again:", err.Error()))
+		input := g.inputHandler.GetUserInput()
 
 		updated, err = g.board.Update(mark, input)
 	}
