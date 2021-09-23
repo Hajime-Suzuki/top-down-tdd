@@ -11,7 +11,7 @@ func NewPlayers() abstractions.Players {
 }
 
 func (ps *Players) GetCurrentPlayer() abstractions.Player {
-	return Player{}
+	return ps.players[0]
 }
 
 func (ps *Players) Next() abstractions.Players {
@@ -29,20 +29,4 @@ func (ps *Players) GetPlayers() []abstractions.Player {
 
 func (ps *Players) GetPlayerByMark(mark string) abstractions.Player {
 	return Player{}
-}
-
-type Player struct {
-	name string
-}
-
-func NewPlayer(name string) Player {
-	return Player{name}
-}
-
-func (p Player) ShowName() string {
-	return p.name
-}
-
-func (p Player) GetMark() string {
-	return "TODO: IMPLEMENT"
 }
