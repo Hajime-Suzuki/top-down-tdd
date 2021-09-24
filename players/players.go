@@ -1,6 +1,8 @@
 package players
 
-import "top-down-tdd/abstractions"
+import (
+	"top-down-tdd/abstractions"
+)
 
 type Players struct {
 	players []abstractions.Player
@@ -15,7 +17,8 @@ func (ps *Players) GetCurrentPlayer() abstractions.Player {
 }
 
 func (ps *Players) Next() abstractions.Players {
-	return &Players{}
+	updated := append(ps.players[1:], ps.players[0])
+	return &Players{updated}
 }
 
 func (ps *Players) RegisterNewPlayer(name string) {
