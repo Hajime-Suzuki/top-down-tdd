@@ -67,6 +67,25 @@ var _ = Describe("Players", func() {
 				current := updated.GetCurrentPlayer()
 				Expect(current.ShowName()).To(Equal("p2"))
 			})
+			It("current player is the same player if Next is called twice", func() {
+				// given
+				p1 := mocks.NewMockPlayer(mockCtrl)
+				p1.EXPECT().ShowName().Return("p1")
+				p2 := mocks.NewMockPlayer(mockCtrl)
+
+				ps := []abstractions.Player{
+					p1, p2,
+				}
+
+				// when
+				subject := Players{ps}
+
+				// then
+				updated := subject.Next()
+				updated = updated.Next()
+				current := updated.GetCurrentPlayer()
+				Expect(current.ShowName()).To(Equal("p1"))
+			})
 		})
 	})
 
