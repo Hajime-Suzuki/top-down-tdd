@@ -3,7 +3,6 @@ package players
 import (
 	"testing"
 	"top-down-tdd/abstractions"
-	"top-down-tdd/abstractions/mocks"
 
 	"github.com/golang/mock/gomock"
 	. "github.com/onsi/ginkgo"
@@ -25,135 +24,100 @@ func makeDefaultPlayers(ps []abstractions.Player) Players {
 
 var _ = Describe("Players", func() {
 
-	var (
-		mockCtrl *gomock.Controller
-	)
-
-	BeforeEach(func() {
-		mockCtrl = newCtrl()
-	})
-
 	Context("Players", func() {
 		Context("GetCurrentPlayer", func() {
 			It("return current player", func() {
 				// given
-				p1 := mocks.NewMockPlayer(mockCtrl)
-				p1.EXPECT().ShowName().Return("p1")
-				p2 := mocks.NewMockPlayer(mockCtrl)
-				ps := []abstractions.Player{
-					p1, p2,
-				}
+				ps := NewPlayers()
+				ps.RegisterNewPlayer("p1")
+				ps.RegisterNewPlayer("p2")
 
 				// when
-				subject := makeDefaultPlayers(ps)
+				subject := ps.GetCurrentPlayer()
 
 				// then
-				res := subject.GetCurrentPlayer()
-				Expect(res.ShowName()).To(Equal("p1"))
+				Expect(subject.ShowName()).To(Equal("p1"))
 			})
 		})
+
 		Context("Next", func() {
 			It("make the next player current", func() {
 				// given
-				p1 := mocks.NewMockPlayer(mockCtrl)
-				p2 := mocks.NewMockPlayer(mockCtrl)
-				p2.EXPECT().ShowName().Return("p2")
-
-				ps := []abstractions.Player{
-					p1, p2,
-				}
+				ps := NewPlayers()
+				ps.RegisterNewPlayer("p1")
+				ps.RegisterNewPlayer("p2")
 
 				// when
-				subject := makeDefaultPlayers(ps)
+				updated := ps.Next()
+				subject := updated.GetCurrentPlayer()
 
 				// then
-				updated := subject.Next()
-				current := updated.GetCurrentPlayer()
-				Expect(current.ShowName()).To(Equal("p2"))
+				Expect(subject.ShowName()).To(Equal("p2"))
 			})
+
 			It("current player is the same player if Next is called twice", func() {
 				// given
-				p1 := mocks.NewMockPlayer(mockCtrl)
-				p1.EXPECT().ShowName().Return("p1")
-				p2 := mocks.NewMockPlayer(mockCtrl)
-
-				ps := []abstractions.Player{
-					p1, p2,
-				}
+				ps := NewPlayers()
+				ps.RegisterNewPlayer("p1")
+				ps.RegisterNewPlayer("p2")
 
 				// when
-				subject := makeDefaultPlayers(ps)
-				// then
-				updated := subject.Next()
+				updated := ps.Next()
 				updated = updated.Next()
-				current := updated.GetCurrentPlayer()
-				Expect(current.ShowName()).To(Equal("p1"))
+				subject := updated.GetCurrentPlayer()
+
+				// then
+				Expect(subject.ShowName()).To(Equal("p1"))
 			})
 		})
+
 		Context("RegisterNewPlayer", func() {
 			It("add new player", func() {
-				playerName1 := "p1"
-				playreMark1 := "o"
-				playerName2 := "p2"
-				playerMark2 := "x"
+				// given
+				ps := NewPlayers()
+				ps.RegisterNewPlayer("p1")
+				ps.RegisterNewPlayer("p2")
 
 				// when
-				subject := NewPlayers()
-				subject.RegisterNewPlayer(playerName1)
-				subject.RegisterNewPlayer(playerName2)
+				subject := ps.GetPlayers()
 
 				// then
-				p1 := subject.GetPlayers()[0]
-				p2 := subject.GetPlayers()[1]
-				Expect(p1.ShowName()).To(Equal(playerName1))
-				Expect(p1.GetMark()).To(Equal(playreMark1))
-				Expect(p2.ShowName()).To(Equal(playerName2))
-				Expect(p2.GetMark()).To(Equal(playerMark2))
+				expected := []abstractions.Player{
+					NewPlayer("p1", "o"),
+					NewPlayer("p2", "x"),
+				}
+
+				Expect(subject).To(Equal(expected))
 			})
 		})
+
 		Context("GetPlayerByMark", func() {
 			It("get 'o' player", func() {
 				// given
-				p1 := mocks.NewMockPlayer(mockCtrl)
-				p1.EXPECT().ShowName().Return("p1")
-				p1.EXPECT().GetMark().Return("o")
-
-				p2 := mocks.NewMockPlayer(mockCtrl)
-				p2.EXPECT().ShowName().Return("p2")
-				p2.EXPECT().GetMark().Return("x")
-
-				ps := []abstractions.Player{
-					p1, p2,
-				}
+				ps := NewPlayers()
+				ps.RegisterNewPlayer("p1")
+				ps.RegisterNewPlayer("p2")
 
 				// when
-				subject := makeDefaultPlayers(ps)
+				subject := ps.GetPlayerByMark("o")
 
 				// then
-				p := subject.GetPlayerByMark("o")
-				Expect(p.ShowName()).To(Equal("p1"))
+				Expect(subject.ShowName()).To(Equal("p1"))
+				Expect(subject.GetMark()).To(Equal("o"))
 			})
 
 			It("get 'x' player", func() {
 				// given
-				p1 := mocks.NewMockPlayer(mockCtrl)
-				p1.EXPECT().ShowName().Return("p1")
-				p1.EXPECT().GetMark().Return("o")
-
-				p2 := mocks.NewMockPlayer(mockCtrl)
-				p2.EXPECT().ShowName().Return("p2")
-				p2.EXPECT().GetMark().Return("x")
-
-				ps := []abstractions.Player{
-					p1, p2,
-				}
+				ps := NewPlayers()
+				ps.RegisterNewPlayer("p1")
+				ps.RegisterNewPlayer("p2")
 
 				// when
-				subject := makeDefaultPlayers(ps)
+				subject := ps.GetPlayerByMark("x")
 
 				// then
-				p := subject.GetPlayerByMark("x")
-				Expect(p.ShowName()).To(Equal("p2"))
+				Expect(subject.ShowName()).To(Equal("p2"))
+				Expect(subject.GetMark()).To(Equal("x"))
 			})
 		})
 	})
