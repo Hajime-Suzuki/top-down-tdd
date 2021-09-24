@@ -48,6 +48,26 @@ var _ = Describe("Players", func() {
 				Expect(res.ShowName()).To(Equal("p1"))
 			})
 		})
+		Context("Next", func() {
+			It("make the next player current", func() {
+				// given
+				p1 := mocks.NewMockPlayer(mockCtrl)
+				p2 := mocks.NewMockPlayer(mockCtrl)
+				p2.EXPECT().ShowName().Return("p2")
+
+				ps := []abstractions.Player{
+					p1, p2,
+				}
+
+				// when
+				subject := Players{ps}
+
+				// then
+				updated := subject.Next()
+				current := updated.GetCurrentPlayer()
+				Expect(current.ShowName()).To(Equal("p2"))
+			})
+		})
 	})
 
 })
