@@ -87,6 +87,28 @@ var _ = Describe("Players", func() {
 				Expect(current.ShowName()).To(Equal("p1"))
 			})
 		})
+		Context("RegisterNewPlayer", func() {
+			It("add new player", func() {
+				playerName1 := "p1"
+				playreMark1 := "o"
+				playerName2 := "p2"
+				playerMark2 := "x"
+
+				// when
+				subject := Players{}
+				subject.RegisterNewPlayer(playerName1)
+				subject.RegisterNewPlayer(playerName2)
+
+				// then
+				p1 := subject.players[0]
+				p2 := subject.players[1]
+				Expect(p1.ShowName()).To(Equal(playerName1))
+				Expect(p1.GetMark()).To(Equal(playreMark1))
+				Expect(p2.ShowName()).To(Equal(playerName2))
+				Expect(p2.GetMark()).To(Equal(playerMark2))
+			})
+		})
+
 	})
 
 })
