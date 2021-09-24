@@ -59,8 +59,8 @@ var _ = Describe("Game", func() {
 
 			// then
 			b := board.NewBoard()
-			p1 := players.NewPlayer("name 1")
-			p2 := players.NewPlayer("name 2")
+			p1 := players.NewPlayer("name 1", "o")
+			p2 := players.NewPlayer("name 2", "x")
 			ps := []abstractions.Player{p1, p2}
 
 			Expect(subject.board).To(Equal(b))

@@ -41,7 +41,7 @@ var _ = Describe("Players", func() {
 				}
 
 				// when
-				subject := Players{ps}
+				subject := Players{ps, []string{"o", "x"}, 0}
 
 				// then
 				res := subject.GetCurrentPlayer()
@@ -60,7 +60,7 @@ var _ = Describe("Players", func() {
 				}
 
 				// when
-				subject := Players{ps}
+				subject := Players{ps, []string{"o", "x"}, 0}
 
 				// then
 				updated := subject.Next()
@@ -78,7 +78,7 @@ var _ = Describe("Players", func() {
 				}
 
 				// when
-				subject := Players{ps}
+				subject := Players{ps, []string{"o", "x"}, 0}
 
 				// then
 				updated := subject.Next()
@@ -95,13 +95,13 @@ var _ = Describe("Players", func() {
 				playerMark2 := "x"
 
 				// when
-				subject := Players{}
+				subject := NewPlayers()
 				subject.RegisterNewPlayer(playerName1)
 				subject.RegisterNewPlayer(playerName2)
 
 				// then
-				p1 := subject.players[0]
-				p2 := subject.players[1]
+				p1 := subject.GetPlayers()[0]
+				p2 := subject.GetPlayers()[1]
 				Expect(p1.ShowName()).To(Equal(playerName1))
 				Expect(p1.GetMark()).To(Equal(playreMark1))
 				Expect(p2.ShowName()).To(Equal(playerName2))
