@@ -111,7 +111,50 @@ var _ = Describe("Players", func() {
 				Expect(p2.GetMark()).To(Equal(playerMark2))
 			})
 		})
+		Context("GetPlayerByMark", func() {
+			It("get 'o' player", func() {
+				// given
+				p1 := mocks.NewMockPlayer(mockCtrl)
+				p1.EXPECT().ShowName().Return("p1")
+				p1.EXPECT().GetMark().Return("o")
 
+				p2 := mocks.NewMockPlayer(mockCtrl)
+				p2.EXPECT().ShowName().Return("p2")
+				p2.EXPECT().GetMark().Return("x")
+
+				ps := []abstractions.Player{
+					p1, p2,
+				}
+
+				// when
+				subject := makeDefaultPlayers(ps)
+
+				// then
+				p := subject.GetPlayerByMark("o")
+				Expect(p.ShowName()).To(Equal("p1"))
+			})
+
+			It("get 'x' player", func() {
+				// given
+				p1 := mocks.NewMockPlayer(mockCtrl)
+				p1.EXPECT().ShowName().Return("p1")
+				p1.EXPECT().GetMark().Return("o")
+
+				p2 := mocks.NewMockPlayer(mockCtrl)
+				p2.EXPECT().ShowName().Return("p2")
+				p2.EXPECT().GetMark().Return("x")
+
+				ps := []abstractions.Player{
+					p1, p2,
+				}
+
+				// when
+				subject := makeDefaultPlayers(ps)
+
+				// then
+				p := subject.GetPlayerByMark("x")
+				Expect(p.ShowName()).To(Equal("p2"))
+			})
+		})
 	})
-
 })
