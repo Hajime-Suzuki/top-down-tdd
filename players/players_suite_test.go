@@ -19,6 +19,10 @@ func newCtrl() *gomock.Controller {
 	return gomock.NewController(GinkgoT())
 }
 
+func makeDefaultPlayers(ps []abstractions.Player) Players {
+	return Players{ps, []string{"o", "x"}, 0}
+}
+
 var _ = Describe("Players", func() {
 
 	var (
@@ -41,7 +45,7 @@ var _ = Describe("Players", func() {
 				}
 
 				// when
-				subject := Players{ps, []string{"o", "x"}, 0}
+				subject := makeDefaultPlayers(ps)
 
 				// then
 				res := subject.GetCurrentPlayer()
@@ -60,7 +64,7 @@ var _ = Describe("Players", func() {
 				}
 
 				// when
-				subject := Players{ps, []string{"o", "x"}, 0}
+				subject := makeDefaultPlayers(ps)
 
 				// then
 				updated := subject.Next()
@@ -78,8 +82,7 @@ var _ = Describe("Players", func() {
 				}
 
 				// when
-				subject := Players{ps, []string{"o", "x"}, 0}
-
+				subject := makeDefaultPlayers(ps)
 				// then
 				updated := subject.Next()
 				updated = updated.Next()
