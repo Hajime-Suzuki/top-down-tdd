@@ -38,10 +38,19 @@ func (ps *Players) RegisterNewPlayer(name string) {
 	ps.markIdx += 1
 }
 
+func (ps *Players) GetPlayerByMark(mark string) abstractions.Player {
+	var player abstractions.Player
+
+	for _, p := range ps.players {
+		if p.GetMark() == mark {
+			player = p
+		}
+	}
+
+	return player
+}
+
 // used for testing
 func (ps *Players) GetPlayers() []abstractions.Player {
 	return ps.players
-}
-func (ps *Players) GetPlayerByMark(mark string) abstractions.Player {
-	return Player{}
 }

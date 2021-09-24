@@ -88,16 +88,3 @@ func (g *game) ShowResultMessage() error {
 	g.presenter.Display(msg)
 	return nil
 }
-
-//TODO: move to players
-func getPlayerByMark(players []abstractions.Player, mark string) abstractions.Player {
-	var player abstractions.Player
-
-	for _, p := range players {
-		if p.GetMark() == mark {
-			player = p
-		}
-	}
-
-	return player
-}
