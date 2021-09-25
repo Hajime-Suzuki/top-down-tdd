@@ -42,16 +42,15 @@ func (b board) IsOver() bool {
 	}
 	lines = append(lines, diagonal...)
 
-	return isComplete(lines) || !hasEmptySpot(lines)
+	c, _ := isComplete(lines)
+	return c || !hasEmptySpot(lines)
 }
 
 func (b board) Show() string {
 	output := ""
 
 	for rowNum, cols := range b.board {
-		for colNum, col := range cols {
-
-			mark := col
+		for colNum, mark := range cols {
 
 			if isEmpty(mark) {
 				mark = strconv.Itoa(BOARD_SIZE*rowNum + colNum + 1)
@@ -64,8 +63,34 @@ func (b board) Show() string {
 	return output
 }
 
+//TODO: refactor
 func (b board) GetWinner() string {
-	return "TODO: IMPLEMENT"
+	lines := [][]string{}
+
+	// add horizontal lines
+	for row := 0; row < BOARD_SIZE; row++ {
+		lines = append(lines, b.board[row])
+	}
+
+	// add vertical lines
+	for col := 0; col < BOARD_SIZE; col++ {
+		verticals := []string{}
+		for row := 0; row < BOARD_SIZE; row++ {
+			verticals = append(verticals, b.board[row][col])
+		}
+		lines = append(lines, verticals)
+	}
+
+	// add diagonal lines
+	diagonal := [][]string{{}, {}}
+	for i := 0; i < BOARD_SIZE; i++ {
+		diagonal[0] = append(diagonal[0], b.board[i][i])
+		diagonal[1] = append(diagonal[1], b.board[i][BOARD_SIZE-1-i])
+	}
+	lines = append(lines, diagonal...)
+
+	_, mark := isComplete(lines)
+	return mark
 }
 
 func (b board) Update(mark string, position string) (abstractions.Board, error) {
@@ -76,11 +101,11 @@ func (b board) Update(mark string, position string) (abstractions.Board, error) 
 func hasEmptySpot(b [][]string) bool {
 	hasEmpty := false
 	for _, columns := range b {
-		for _, col := range columns {
+		for _, mark := range columns {
 			if hasEmpty {
 				return hasEmpty
 			}
-			if isEmpty(col) {
+			if isEmpty(mark) {
 				hasEmpty = true
 			}
 		}
@@ -94,9 +119,7 @@ func isEmpty(s string) bool {
 }
 
 // checks if line has the same 3 marks
-func isComplete(lines [][]string) bool {
-	isCompleted := false
-
+func isComplete(lines [][]string) (isCompleted bool, mark string) {
 	for _, ls := range lines {
 		if isCompleted {
 			break
@@ -112,8 +135,9 @@ func isComplete(lines [][]string) bool {
 
 			if i == BOARD_SIZE-1 {
 				isCompleted = true
+				mark = ls[i]
 			}
 		}
 	}
-	return isCompleted
+	return isCompleted, mark
 }
