@@ -16,6 +16,7 @@ func NewBoard() abstractions.Board {
 	return board{}
 }
 
+//TODO: memoize
 func (b board) IsOver() bool {
 	lines := [][]string{}
 
@@ -41,7 +42,7 @@ func (b board) IsOver() bool {
 	}
 	lines = append(lines, diagonal...)
 
-	return isComplete(lines)
+	return isComplete(lines) || !hasEmptySpot(lines)
 }
 
 func (b board) Show() string {
@@ -70,6 +71,22 @@ func (b board) GetWinner() string {
 func (b board) Update(mark string, position string) (abstractions.Board, error) {
 	//TODO: IMPLEMENT
 	return board{}, nil
+}
+
+func hasEmptySpot(b [][]string) bool {
+	hasEmpty := false
+	for _, columns := range b {
+		for _, col := range columns {
+			if hasEmpty {
+				return hasEmpty
+			}
+			if isEmpty(col) {
+				hasEmpty = true
+			}
+		}
+	}
+
+	return hasEmpty
 }
 
 func isEmpty(s string) bool {
