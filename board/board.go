@@ -16,57 +16,24 @@ func NewBoard() abstractions.Board {
 	return board{}
 }
 
-func isEmpty(s string) bool {
-	return s == "-"
-}
-
 func (b board) IsOver() bool {
-	isOver := false
+	lines := [][]string{}
 
-	// horizontal
+	// add row
 	for row := 0; row < BOARD_SIZE; row++ {
-		complete := true
-		firstMarkInRow := b.board[row][0]
-
-		for col := 0; col < BOARD_SIZE; col++ {
-			currentMark := b.board[row][col]
-
-			// if mark is "-" or symbol is not the same as the first item of the row, do not consider this row anymore
-			if firstMarkInRow != currentMark || isEmpty(currentMark) {
-				complete = false
-				break
-			}
-		}
-
-		// if all the marks in the row, game is over
-		if complete == true {
-			isOver = true
-			break
-		}
+		lines = append(lines, b.board[row])
 	}
 
-	// vertical
+	// add column
 	for col := 0; col < BOARD_SIZE; col++ {
-		complete := true
-		firstMarkInCol := b.board[0][col]
-
+		verticals := []string{}
 		for row := 0; row < BOARD_SIZE; row++ {
-			currentMark := b.board[row][col]
-
-			// if mark is "-" or symbol is not the same as the first item of the row, do not consider this row anymore
-			if firstMarkInCol != currentMark || isEmpty(currentMark) {
-				complete = false
-				break
-			}
+			verticals = append(verticals, b.board[row][col])
 		}
-
-		// if all the marks in the row, game is over
-		if complete == true {
-			isOver = true
-			break
-		}
+		lines = append(lines, verticals)
 	}
-	return isOver
+
+	return isComplete(lines)
 }
 
 func (b board) Show() string {
@@ -95,4 +62,33 @@ func (b board) GetWinner() string {
 func (b board) Update(mark string, position string) (abstractions.Board, error) {
 	//TODO: IMPLEMENT
 	return board{}, nil
+}
+
+func isEmpty(s string) bool {
+	return s == "-"
+}
+
+// checks if line has the same 3 marks
+func isComplete(lines [][]string) bool {
+	isCompleted := false
+
+	for _, ls := range lines {
+		if isCompleted {
+			break
+		}
+
+		for i := 1; i < BOARD_SIZE; i++ {
+			current := ls[i]
+			prev := ls[i-1]
+
+			if current != prev || isEmpty(current) {
+				break
+			}
+
+			if i == BOARD_SIZE-1 {
+				isCompleted = true
+			}
+		}
+	}
+	return isCompleted
 }
