@@ -13,7 +13,7 @@ func TestBoard(t *testing.T) {
 }
 
 func newBoard(b [][]string) board {
-	return board{b}
+	return board{b, nil}
 }
 
 var _ = Describe("Board", func() {
@@ -249,7 +249,7 @@ var _ = Describe("Board", func() {
 			Expect(subject).To(Equal(""))
 		})
 
-		It("return empty string when there is a winner", func() {
+		It("return mark when there is a winner", func() {
 			data := [][]string{
 				{"o", "o", "o"},
 				{"-", "x", "-"},
