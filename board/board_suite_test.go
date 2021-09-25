@@ -232,4 +232,36 @@ var _ = Describe("Board", func() {
 		})
 
 	})
+
+	Context("GetWinner", func() {
+		It("return empty string when there is no winner", func() {
+			data := [][]string{
+				{"-", "o", "-"},
+				{"-", "x", "-"},
+				{"x", "-", "-"},
+			}
+			b := newBoard(data)
+
+			// when
+			subject := b.GetWinner()
+
+			// then
+			Expect(subject).To(Equal(""))
+		})
+
+		It("return empty string when there is a winner", func() {
+			data := [][]string{
+				{"o", "o", "o"},
+				{"-", "x", "-"},
+				{"x", "-", "-"},
+			}
+			b := newBoard(data)
+
+			// when
+			subject := b.GetWinner()
+
+			// then
+			Expect(subject).To(Equal("o"))
+		})
+	})
 })
