@@ -72,51 +72,105 @@ var _ = Describe("Board", func() {
 			})
 		})
 		When("Game is over", func() {
-			It("return true if there are 3 marks horizontally (first row)", func() {
-				// given
-				data := [][]string{
-					{"x", "x", "x"},
-					{"-", "o", "-"},
-					{"-", "-", "x"},
-				}
-				b := board{data}
+			When("horizontal", func() {
+				It("return true if there are 3 marks horizontally (first row)", func() {
+					// given
+					data := [][]string{
+						{"x", "x", "x"},
+						{"-", "o", "-"},
+						{"-", "-", "x"},
+					}
+					b := board{data}
 
-				// when
-				subject := b.IsOver()
+					// when
+					subject := b.IsOver()
 
-				// then
-				Expect(subject).To(Equal(true))
+					// then
+					Expect(subject).To(Equal(true))
+				})
+				It("return true if there are 3 marks horizontally (second row)", func() {
+					// given
+					data := [][]string{
+						{"o", "-", "x"},
+						{"o", "o", "o"},
+						{"-", "-", "x"},
+					}
+					b := board{data}
+
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
+				It("return true if there are 3 marks horizontally (third row)", func() {
+					// given
+					data := [][]string{
+						{"o", "-", "x"},
+						{"-", "o", "o"},
+						{"x", "x", "x"},
+					}
+					b := board{data}
+
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
 			})
-			It("return true if there are 3 marks horizontally (second row)", func() {
-				// given
-				data := [][]string{
-					{"o", "-", "x"},
-					{"o", "o", "o"},
-					{"-", "-", "x"},
-				}
-				b := board{data}
 
-				// when
-				subject := b.IsOver()
+			When("vertical", func() {
 
-				// then
-				Expect(subject).To(Equal(true))
-			})
-			It("return true if there are 3 marks horizontally (third row)", func() {
-				// given
-				data := [][]string{
-					{"o", "-", "x"},
-					{"-", "o", "o"},
-					{"x", "x", "x"},
-				}
-				b := board{data}
+				It("return true if there are 3 marks (first column)", func() {
 
-				// when
-				subject := b.IsOver()
+					// given
+					data := [][]string{
+						{"o", "x", "x"},
+						{"o", "x", "-"},
+						{"o", "-", "x"},
+					}
+					b := board{data}
 
-				// then
-				Expect(subject).To(Equal(true))
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
+				It("return true if there are 3 marks (second column)", func() {
+					// given
+					data := [][]string{
+						{"-", "x", "o"},
+						{"-", "x", "o"},
+						{"-", "x", "-"},
+					}
+					b := board{data}
+
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
+				It("return true if there are 3 marks horizontally (third column)", func() {
+					// given
+					data := [][]string{
+						{"o", "-", "x"},
+						{"-", "-", "x"},
+						{"x", "o", "x"},
+					}
+					b := board{data}
+
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
+
 			})
 		})
+
 	})
 })
