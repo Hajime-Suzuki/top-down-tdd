@@ -16,8 +16,36 @@ func NewBoard() abstractions.Board {
 	return board{}
 }
 
+func isEmpty(s string) bool {
+	return s == "-"
+}
+
 func (b board) IsOver() bool {
-	return true
+	isOver := false
+
+	// horizontal
+	for row := 0; row < BOARD_SIZE; row++ {
+		complete := true
+		firstMarkInRow := b.board[row][0]
+
+		for col := 0; col < BOARD_SIZE; col++ {
+			currentMark := b.board[row][col]
+
+			// if mark is "-" or symbol is not the same as the first item of the row, do not consider this row anymore
+			if firstMarkInRow != currentMark || isEmpty(currentMark) {
+				complete = false
+				break
+			}
+		}
+
+		// if all the marks in the row, game is over
+		if complete == true {
+			isOver = true
+			break
+		}
+	}
+
+	return isOver
 }
 
 func (b board) Show() string {
@@ -26,17 +54,16 @@ func (b board) Show() string {
 	for rowNum, cols := range b.board {
 		for colNum, col := range cols {
 
-			symbol := col
+			mark := col
 
-			if symbol == "-" {
-				symbol = strconv.Itoa(BOARD_SIZE*rowNum + colNum + 1)
+			if isEmpty(mark) {
+				mark = strconv.Itoa(BOARD_SIZE*rowNum + colNum + 1)
 			}
 
-			output += fmt.Sprintf("%s ", symbol)
+			output += fmt.Sprintf("%s ", mark)
 		}
 		output += "\n"
 	}
-
 	return output
 }
 
