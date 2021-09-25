@@ -34,4 +34,21 @@ var _ = Describe("Board", func() {
 `))
 		})
 	})
+	Context("IsOver", func() {
+		It("returns true if there are 3 marks horizontally", func() {
+			// given
+			data := [][]string{
+				{"x", "x", "x"},
+				{"-", "o", "-"},
+				{"-", "-", "x"},
+			}
+			b := board{data}
+
+			// when
+			subject := b.IsOver()
+
+			// then
+			Expect(subject).To(Equal(true))
+		})
+	})
 })
