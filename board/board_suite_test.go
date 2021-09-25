@@ -172,6 +172,41 @@ var _ = Describe("Board", func() {
 				})
 
 			})
+
+			When("diagonal", func() {
+				It("return true if there are 3 marks (diagonal 1)", func() {
+
+					// given
+					data := [][]string{
+						{"o", "x", "x"},
+						{"-", "o", "x"},
+						{"o", "x", "o"},
+					}
+					b := board{data}
+
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
+				It("return true if there are 3 marks (diagonal 2)", func() {
+
+					// given
+					data := [][]string{
+						{"o", "-", "x"},
+						{"-", "x", "o"},
+						{"x", "-", "o"},
+					}
+					b := board{data}
+
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
+			})
 		})
 
 	})
