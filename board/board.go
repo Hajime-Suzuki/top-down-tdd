@@ -19,12 +19,12 @@ func NewBoard() abstractions.Board {
 func (b board) IsOver() bool {
 	lines := [][]string{}
 
-	// add row
+	// add horizontal lines
 	for row := 0; row < BOARD_SIZE; row++ {
 		lines = append(lines, b.board[row])
 	}
 
-	// add column
+	// add vertical lines
 	for col := 0; col < BOARD_SIZE; col++ {
 		verticals := []string{}
 		for row := 0; row < BOARD_SIZE; row++ {
@@ -32,6 +32,14 @@ func (b board) IsOver() bool {
 		}
 		lines = append(lines, verticals)
 	}
+
+	// add diagonal lines
+	diagonal := [][]string{{}, {}}
+	for i := 0; i < BOARD_SIZE; i++ {
+		diagonal[0] = append(diagonal[0], b.board[i][i])
+		diagonal[1] = append(diagonal[1], b.board[i][BOARD_SIZE-1-i])
+	}
+	lines = append(lines, diagonal...)
 
 	return isComplete(lines)
 }
