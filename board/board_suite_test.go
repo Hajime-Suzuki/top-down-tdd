@@ -138,6 +138,7 @@ var _ = Describe("Board", func() {
 					// then
 					Expect(subject).To(Equal(true))
 				})
+
 				It("return true if there are 3 marks (second column)", func() {
 					// given
 					data := [][]string{
@@ -153,6 +154,7 @@ var _ = Describe("Board", func() {
 					// then
 					Expect(subject).To(Equal(true))
 				})
+
 				It("return true if there are 3 marks horizontally (third column)", func() {
 					// given
 					data := [][]string{

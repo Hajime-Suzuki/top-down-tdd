@@ -45,6 +45,27 @@ func (b board) IsOver() bool {
 		}
 	}
 
+	// vertical
+	for col := 0; col < BOARD_SIZE; col++ {
+		complete := true
+		firstMarkInCol := b.board[0][col]
+
+		for row := 0; row < BOARD_SIZE; row++ {
+			currentMark := b.board[row][col]
+
+			// if mark is "-" or symbol is not the same as the first item of the row, do not consider this row anymore
+			if firstMarkInCol != currentMark || isEmpty(currentMark) {
+				complete = false
+				break
+			}
+		}
+
+		// if all the marks in the row, game is over
+		if complete == true {
+			isOver = true
+			break
+		}
+	}
 	return isOver
 }
 
