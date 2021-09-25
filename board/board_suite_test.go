@@ -12,6 +12,10 @@ func TestBoard(t *testing.T) {
 	RunSpecs(t, "Board Suite")
 }
 
+func newBoard(b [][]string) board {
+	return board{b}
+}
+
 var _ = Describe("Board", func() {
 
 	Context("Show", func() {
@@ -22,7 +26,7 @@ var _ = Describe("Board", func() {
 				{"-", "o", "-"},
 				{"-", "-", "x"},
 			}
-			b := board{data}
+			b := newBoard(data)
 
 			// when
 			subject := b.Show()
@@ -46,7 +50,7 @@ var _ = Describe("Board", func() {
 					{"-", "-", "-"},
 					{"-", "-", "-"},
 				}
-				b := board{data}
+				b := newBoard(data)
 
 				// when
 				subject := b.IsOver()
@@ -62,7 +66,7 @@ var _ = Describe("Board", func() {
 					{"x", "-", "-"},
 					{"o", "o", "x"},
 				}
-				b := board{data}
+				b := newBoard(data)
 
 				// when
 				subject := b.IsOver()
@@ -72,6 +76,24 @@ var _ = Describe("Board", func() {
 			})
 		})
 		When("Game is over", func() {
+			When("draw", func() {
+				It("return true", func() {
+
+					// given
+					data := [][]string{
+						{"o", "x", "o"},
+						{"x", "x", "o"},
+						{"x", "o", "x"},
+					}
+					b := newBoard(data)
+
+					// when
+					subject := b.IsOver()
+
+					// then
+					Expect(subject).To(Equal(true))
+				})
+			})
 			When("horizontal", func() {
 				It("return true if there are 3 marks horizontally (first row)", func() {
 					// given
@@ -80,7 +102,7 @@ var _ = Describe("Board", func() {
 						{"-", "o", "-"},
 						{"-", "-", "x"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
@@ -95,7 +117,7 @@ var _ = Describe("Board", func() {
 						{"o", "o", "o"},
 						{"-", "-", "x"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
@@ -110,7 +132,7 @@ var _ = Describe("Board", func() {
 						{"-", "o", "o"},
 						{"x", "x", "x"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
@@ -130,7 +152,7 @@ var _ = Describe("Board", func() {
 						{"o", "x", "-"},
 						{"o", "-", "x"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
@@ -146,7 +168,7 @@ var _ = Describe("Board", func() {
 						{"-", "x", "o"},
 						{"-", "x", "-"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
@@ -162,7 +184,7 @@ var _ = Describe("Board", func() {
 						{"-", "-", "x"},
 						{"x", "o", "x"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
@@ -182,7 +204,7 @@ var _ = Describe("Board", func() {
 						{"-", "o", "x"},
 						{"o", "x", "o"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
@@ -198,7 +220,7 @@ var _ = Describe("Board", func() {
 						{"-", "x", "o"},
 						{"x", "-", "o"},
 					}
-					b := board{data}
+					b := newBoard(data)
 
 					// when
 					subject := b.IsOver()
