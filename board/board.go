@@ -1,8 +1,16 @@
 package board
 
-import "top-down-tdd/abstractions"
+import (
+	"fmt"
+	"strconv"
+	"top-down-tdd/abstractions"
+)
 
-type board struct{}
+type board struct {
+	board [][]string
+}
+
+var BOARD_SIZE = 3
 
 func NewBoard() abstractions.Board {
 	return board{}
@@ -13,7 +21,23 @@ func (b board) IsOver() bool {
 }
 
 func (b board) Show() string {
-	return "TODO: IMPLEMENT"
+	output := ""
+
+	for rowNum, cols := range b.board {
+		for colNum, col := range cols {
+
+			symbol := col
+
+			if symbol == "-" {
+				symbol = strconv.Itoa(BOARD_SIZE*rowNum + colNum + 1)
+			}
+
+			output += fmt.Sprintf("%s ", symbol)
+		}
+		output += "\n"
+	}
+
+	return output
 }
 
 func (b board) GetWinner() string {
