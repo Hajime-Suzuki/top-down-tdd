@@ -9,7 +9,6 @@ import (
 
 func validate(board [][]string, position string) error {
 	p, err := strconv.Atoi(position)
-
 	if err != nil {
 		return errors.New("Position should be number")
 	}
@@ -20,9 +19,8 @@ func validate(board [][]string, position string) error {
 	}
 
 	row := math.Floor((pos - 1) / BOARD_SIZE)
-	col := math.Mod((pos - 1), row*BOARD_SIZE)
+	col := math.Mod((pos - 1), math.Max(row, 1)*BOARD_SIZE)
 
-	fmt.Println(row, col)
 	targetMark := board[int(row)][int(col)]
 
 	if !isEmpty(targetMark) {
