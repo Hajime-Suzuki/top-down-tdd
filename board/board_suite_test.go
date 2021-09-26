@@ -310,5 +310,19 @@ var _ = Describe("Board", func() {
 			// then
 			Expect(subject.Error()).To(Equal("Position 5 is not empty"))
 		})
+		It("return error if position is not integer string", func() {
+			data := [][]string{
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+			}
+			b := newBoard(data)
+
+			// when
+			_, subject := b.Update("o", "should fail")
+
+			// then
+			Expect(subject.Error()).To(Equal("Position should be number"))
+		})
 	})
 })
