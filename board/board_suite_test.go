@@ -299,16 +299,16 @@ var _ = Describe("Board", func() {
 		It("return error if position is not empty", func() {
 			data := [][]string{
 				{"-", "-", "-"},
-				{"-", "o", "-"},
 				{"-", "-", "-"},
+				{"-", "-", "o"},
 			}
 			b := newBoard(data)
 
 			// when
-			_, subject := b.Update("o", "5")
+			_, subject := b.Update("o", "9")
 
 			// then
-			Expect(subject.Error()).To(Equal("Position 5 is not empty"))
+			Expect(subject.Error()).To(Equal("Position 9 is not empty"))
 		})
 		It("return error if position is not integer string", func() {
 			data := [][]string{
@@ -323,6 +323,21 @@ var _ = Describe("Board", func() {
 
 			// then
 			Expect(subject.Error()).To(Equal("Position should be number"))
+		})
+		It("stats is nil after updated", func() {
+			data := [][]string{
+				{"o", "o", "-"},
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+			}
+			b := newBoard(data)
+
+			// when
+			s, _ := b.Update("o", "3")
+			subject := s.(board)
+
+			// then
+			Expect(subject.stats).To(BeNil())
 		})
 	})
 })
