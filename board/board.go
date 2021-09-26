@@ -50,6 +50,12 @@ func (b board) GetWinner() string {
 }
 
 func (b board) Update(playerMark string, position string) (abstractions.Board, error) {
+	err := validate(b.board, position)
+
+	if err != nil {
+		return board{}, err
+	}
+
 	// initialize 2 dimension slice
 	newBoard := make([][]string, BOARD_SIZE)
 	for i := range newBoard {

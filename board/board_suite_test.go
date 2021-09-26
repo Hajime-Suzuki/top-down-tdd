@@ -294,7 +294,7 @@ var _ = Describe("Board", func() {
 			_, subject := b.Update("o", "100")
 
 			// then
-			Expect(subject.Error()).To(Equal("invalid position!"))
+			Expect(subject.Error()).To(Equal("position is too big"))
 		})
 	})
 })
