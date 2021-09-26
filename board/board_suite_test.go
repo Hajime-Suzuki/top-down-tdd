@@ -264,4 +264,23 @@ var _ = Describe("Board", func() {
 			Expect(subject).To(Equal("o"))
 		})
 	})
+	Context("Update", func() {
+		It("return a new board", func() {
+			data := [][]string{
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+			}
+			b := newBoard(data)
+
+			// when
+			subject, _ := b.Update("o", "5")
+			updated := `1 2 3 
+4 o 6 
+7 8 9 
+`
+			// then
+			Expect(subject.Show()).To(Equal(updated))
+		})
+	})
 })
