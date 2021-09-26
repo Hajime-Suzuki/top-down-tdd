@@ -282,5 +282,19 @@ var _ = Describe("Board", func() {
 			// then
 			Expect(subject.Show()).To(Equal(updated))
 		})
+		It("return error if position is out of board size", func() {
+			data := [][]string{
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+			}
+			b := newBoard(data)
+
+			// when
+			_, subject := b.Update("o", "100")
+
+			// then
+			Expect(subject.Error()).To(Equal("invalid position!"))
+		})
 	})
 })
