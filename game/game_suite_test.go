@@ -33,6 +33,22 @@ var _ = Describe("Game", func() {
 		mockCtrl = newCtrl()
 	})
 
+	Context("NewGame", func() {
+		It("create new game", func() {
+			// given
+			i := mocks.NewMockInputHandler(mockCtrl)
+			i.EXPECT().GetUserInput().Times(1)
+			p := mocks.NewMockPresenter(mockCtrl)
+			p.EXPECT().Display("test").Times(1)
+
+			// when
+			g := NewGame(i, p)
+			gg := g.(*game)
+			gg.inputHandler.GetUserInput()
+			gg.presenter.Display("test")
+		})
+	})
+
 	Context("InitGame", func() {
 		It("create board and players", func() {
 			//******
