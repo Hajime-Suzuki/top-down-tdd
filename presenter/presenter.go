@@ -8,7 +8,7 @@ import (
 type TerminalPresenter struct {
 }
 
-func NewPresenter() abstractions.Presenter {
+func NewTerminalPresenter() abstractions.Presenter {
 	return TerminalPresenter{}
 }
 

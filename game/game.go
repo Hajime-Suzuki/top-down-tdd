@@ -16,7 +16,7 @@ type game struct {
 	presenter    abstractions.Presenter
 }
 
-func NewGame(
+func newGame(
 	inputHandler abstractions.InputHandler,
 	presenter abstractions.Presenter,
 ) abstractions.Game {

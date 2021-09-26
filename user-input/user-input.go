@@ -8,13 +8,13 @@ import (
 type TerminalUserInputHandler struct {
 }
 
-func NewUserInput() abstractions.InputHandler {
+func NewTerminalUserInputHandler() abstractions.InputHandler {
 	return TerminalUserInputHandler{}
 }
 
 func (u TerminalUserInputHandler) GetUserInput() string {
 	var input string
-	if _, err := fmt.Scanln(input); err != nil {
+	if _, err := fmt.Scanln(&input); err != nil {
 		panic(err)
 	}
 	return input

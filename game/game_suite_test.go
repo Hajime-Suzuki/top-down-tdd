@@ -42,7 +42,7 @@ var _ = Describe("Game", func() {
 			p.EXPECT().Display("test").Times(1)
 
 			// when
-			g := NewGame(i, p)
+			g := newGame(i, p)
 			gg := g.(*game)
 			gg.inputHandler.GetUserInput()
 			gg.presenter.Display("test")
