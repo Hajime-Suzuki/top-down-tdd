@@ -8,7 +8,12 @@ import (
 )
 
 func validate(board [][]string, position string) error {
-	p, _ := strconv.Atoi(position)
+	p, err := strconv.Atoi(position)
+
+	if err != nil {
+		return errors.New("Position should be number")
+	}
+
 	pos := float64(p)
 	if pos > BOARD_SIZE*BOARD_SIZE {
 		return errors.New("Position is too big")
