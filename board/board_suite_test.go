@@ -18,6 +18,23 @@ func newBoard(b [][]string) board {
 
 var _ = Describe("Board", func() {
 
+	Context("NewBoard", func() {
+		It("return correct board", func() {
+			b := NewBoard()
+			board := b.(board)
+
+			subject := board.board
+
+			initialBoard := [][]string{
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+				{"-", "-", "-"},
+			}
+
+			Expect(subject).To(Equal(initialBoard))
+		})
+	})
+
 	Context("Show", func() {
 		It("returns representation of board", func() {
 			// given
