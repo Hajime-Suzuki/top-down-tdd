@@ -16,7 +16,7 @@ type stats struct {
 	hasEmpty bool
 }
 
-var BOARD_SIZE = 3
+const BOARD_SIZE = 3
 
 func NewBoard() abstractions.Board {
 	return board{}
@@ -49,9 +49,24 @@ func (b board) GetWinner() string {
 	return s.winner
 }
 
-func (b board) Update(mark string, position string) (abstractions.Board, error) {
-	//TODO: IMPLEMENT
-	return board{}, nil
+func (b board) Update(playerMark string, position string) (abstractions.Board, error) {
+	// initialize 2 dimension slice
+	newBoard := make([][]string, BOARD_SIZE)
+	for i := range newBoard {
+		newBoard[i] = make([]string, BOARD_SIZE)
+	}
+
+	for i, col := range b.board {
+		for j, mark := range col {
+			if strconv.Itoa(i*BOARD_SIZE+1+j) == position {
+				newBoard[i][j] = playerMark
+			} else {
+				newBoard[i][j] = mark
+			}
+		}
+	}
+
+	return board{board: newBoard, stats: nil}, nil
 }
 
 func (b board) calculateStats() stats {
