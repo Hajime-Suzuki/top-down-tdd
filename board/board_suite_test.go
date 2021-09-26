@@ -294,7 +294,21 @@ var _ = Describe("Board", func() {
 			_, subject := b.Update("o", "100")
 
 			// then
-			Expect(subject.Error()).To(Equal("position is too big"))
+			Expect(subject.Error()).To(Equal("Position is too big"))
+		})
+		It("return error if position is not empty", func() {
+			data := [][]string{
+				{"-", "-", "-"},
+				{"-", "o", "-"},
+				{"-", "-", "-"},
+			}
+			b := newBoard(data)
+
+			// when
+			_, subject := b.Update("o", "5")
+
+			// then
+			Expect(subject.Error()).To(Equal("Position 5 is not empty"))
 		})
 	})
 })
