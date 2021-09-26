@@ -7,8 +7,8 @@ import (
 )
 
 type board struct {
-	board [][]string
-	*stats
+	board  [][]string
+	*stats // calculated IsOver or GetWinner is called
 }
 
 type stats struct {
@@ -19,7 +19,13 @@ type stats struct {
 const BOARD_SIZE = 3
 
 func NewBoard() abstractions.Board {
-	return board{}
+	initialBoard := [][]string{
+		{"-", "-", "-"},
+		{"-", "-", "-"},
+		{"-", "-", "-"},
+	}
+
+	return board{board: initialBoard}
 }
 
 func (b board) IsOver() bool {
