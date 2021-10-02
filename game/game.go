@@ -43,9 +43,8 @@ func (g *game) InitGame() {
 func (g *game) SetMark() {
 	p := g.players.GetCurrentPlayer()
 
-	g.presenter.Display(fmt.Sprintf(`
-	%s, select position:
-	%s`, p.ShowName(), g.board.Show()))
+	g.presenter.Display(fmt.Sprintf(`%s, select position:
+%s`, p.ShowName(), g.board.Show()))
 	input := g.inputHandler.GetUserInput()
 
 	mark := p.GetMark()

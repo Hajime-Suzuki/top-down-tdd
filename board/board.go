@@ -8,7 +8,7 @@ import (
 
 type board struct {
 	board  [][]string
-	*stats // calculated IsOver or GetWinner is called
+	*stats // calculated when IsOver or GetWinner is called
 }
 
 type stats struct {
@@ -119,10 +119,6 @@ func (b board) calculateStats() stats {
 	}
 
 	return *b.stats
-}
-
-func (b board) resetStats() {
-	b.stats = nil
 }
 
 func hasEmptySpot(b [][]string) bool {
